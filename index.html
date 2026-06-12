@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EagleDateing - Global Premium Dating</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #0f172a; color: #f8fafc; padding: 15px; }
+        .container { max-width: 500px; margin: 0 auto; background: #1e293b; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { text-align: center; color: #f43f5e; margin-bottom: 20px; font-size: 28px; }
+        .card { background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #475569; }
+        .badge { background: #f43f5e; padding: 3px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .info-row { margin: 8px 0; font-size: 15px; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-primary { background: #f43f5e; color: white; }
+        .btn-primary:hover { background: #e11d48; }
+        .btn-success { background: #10b981; color: white; }
+        .ad-box { background: #020617; border: 2px dashed #f59e0b; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; display: none; }
+        .counter-text { font-size: 18px; color: #f59e0b; font-weight: bold; margin: 5px 0; }
+        .number-locked { background: #475569; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; color: #cbd5e1; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🦅 EagleDateing</h1>
+    <p style="text-align: center; font-size: 14px; color: #94a3b8; margin-bottom: 20px;">Global Profiles & Verified Connections</p>
+
+    <!-- SAMPLE PROFILE CARD -->
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3>Priya Sharma, 24</h3>
+            <span class="badge">Online</span>
+        </div>
+        <div class="info-row">📍 <strong>Location:</strong> Mumbai, India (Global)</div>
+        <div class="info-row">📏 <strong>Height:</strong> 5'4"</div>
+        <div class="info-row">🎯 <strong>Choices/Similarity:</strong> Looking for Opposite Vibes</div>
+        <div class="info-row">🚭 <strong>Habits:</strong> Non-Smoker, Teetotaler</div>
+        <div class="info-row">🎨 <strong>Hobbies:</strong> Traveling, Photography, Music</div>
+        
+        <!-- CONTACT SECTION WITH AD LOCK -->
+        <div id="contact-section">
+            <div class="number-locked" id="lock-status">🔒 Mobile Number Locked (1000 Ads Required)</div>
+            <button class="btn btn-primary" onclick="showAdSystem()">Contact / Get Mobile Number</button>
+        </div>
+    </div>
+
+    <!-- AD WATCHING PLATFORM (BUSSINESS ENGINE) -->
+    <div class="ad-box" id="ad-platform">
+        <h4 style="color: #f59e0b;">📺 Video Ad Network</h4>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Number dekhne ke liye ad poora dekhein</p>
+        <div class="counter-text">Ads Watched: <span id="ad-count">0</span> / 1000</div>
+        
+        <!-- MOCK AD PLATFORM -->
+        <div id="ad-video-screen" style="background: #000; height: 100px; margin: 10px 0; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 12px;">
+            Click "Watch Ad" to start earning view points
+        </div>
+        
+        <button class="btn btn-success" id="ad-btn" onclick="simulateWatchingAd()">▶️ Watch Video Ad (10 Sec)</button>
+    </div>
+</div>
+
+<script>
+    let currentAds = 0;
+    const targetAds = 1000;
+
+    function showAdSystem() {
+        document.getElementById('ad-platform').style.display = 'block';
+        document.getElementById('ad-platform').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function simulateWatchingAd() {
+        let btn = document.getElementById('ad-btn');
+        let videoScreen = document.getElementById('ad-video-screen');
+        
+        btn.disabled = true;
+        btn.innerText = "⏳ Watching Ad... (Don't Close)";
+        videoScreen.innerHTML = "<span style='color: #f59e0b; font-weight:bold; animation: blink 1s infinite;'>🎬 [AD VIDEO RUNNING] Earning Revenue...</span>";
+
+        // Simulating 3 seconds ad for fast testing, can be updated to 10-15 secs
+        setTimeout(() => {
+            currentAds++;
+            document.getElementById('ad-count').innerText = currentAds;
+            
+            btn.disabled = false;
+            btn.innerText = "▶️ Watch Video Ad (10 Sec)";
+            videoScreen.innerHTML = "<span style='color: #10b981;'>✅ Ad Completed! +1 Count Added</span>";
+
+            // CHECK IF 1000 ADS ARE DONE
+            if (currentAds >= targetAds) {
+                document.getElementById('lock-status').innerHTML = "🔓 UNLOCKED: +91 98765 43210";
+                document.getElementById('lock-status').style.background = "#10b981";
+                document.getElementById('lock-status').style.color = "white";
+                document.getElementById('ad-platform').style.display = 'none';
+                alert("Mubarak ho! 1000 Ads poore hue. Mobile Number unlock ho gaya hai.");
+            }
+        }, 3000);
+    }
+</script>
+</body>
+</html>
