@@ -1,102 +1,247 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EagleDateing - Global Premium Dating</title>
+    <title>EagleDateing - Premium Match</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background: #0f172a; color: #f8fafc; padding: 15px; }
-        .container { max-width: 500px; margin: 0 auto; background: #1e293b; padding: 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        h1 { text-align: center; color: #f43f5e; margin-bottom: 20px; font-size: 28px; }
-        .card { background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #475569; }
-        .badge { background: #f43f5e; padding: 3px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
-        .info-row { margin: 8px 0; font-size: 15px; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-primary { background: #f43f5e; color: white; }
-        .btn-primary:hover { background: #e11d48; }
-        .btn-success { background: #10b981; color: white; }
-        .ad-box { background: #020617; border: 2px dashed #f59e0b; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px; display: none; }
-        .counter-text { font-size: 18px; color: #f59e0b; font-weight: bold; margin: 5px 0; }
-        .number-locked { background: #475569; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; color: #cbd5e1; margin-top: 10px; }
+        body { background-color: #121212; color: #ffffff; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.4); }
+        
+        /* Ad Banner Section */
+        .ad-container { width: 100%; max-width: 450px; background: #1e1e1e; border: 2px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; font-size: 12px; color: #ff9f43; }
+        
+        .action-buttons { width: 100%; max-width: 450px; display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px; }
+        .btn-reg { background-color: #00b894; color: white; }
+        .btn-search { background-color: #0984e3; color: white; }
+
+        /* Registration Form Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 100; padding: 20px; }
+        .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; border: 1px solid #333; }
+        .modal-content h3 { margin-bottom: 15px; color: #00b894; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: #aaa; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; }
+        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .close-btn { float: right; cursor: pointer; color: #aaa; font-size: 20px; }
+
+        /* Search Section */
+        .search-box { display: none; width: 100%; max-width: 450px; background: #1e1e1e; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
+        .search-box select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; color: white; border-radius: 6px; }
+
+        /* Profiles Container */
+        .profiles-container { width: 100%; max-width: 450px; }
+        .profile-card { background: #1e1e1e; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #2d2d2d; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .profile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .profile-name { font-size: 22px; font-weight: bold; color: #fff; }
+        .status-online { background: #ff4757; color: white; padding: 3px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .info-row { margin: 8px 0; font-size: 14px; color: #ccc; display: flex; align-items: center; }
+        .info-row strong { color: #aaa; width: 100px; display: inline-block; }
+        
+        .lock-box { background: #2d2d2d; border-radius: 8px; padding: 12px; text-align: center; font-size: 14px; font-weight: bold; color: #aaa; margin-top: 15px; border: 1px solid #3d3d3d; }
+        .btn-unlock { width: 100%; background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.3); transition: transform 0.2s; }
+        
+        /* Ad Network Box inside Counter */
+        .ad-network-box { margin-top: 15px; background: #151515; border: 1px dashed #ff9f43; padding: 15px; border-radius: 10px; text-align: center; }
+        .ad-count { font-size: 18px; color: #ff9f43; font-weight: bold; margin-bottom: 10px; }
+        .btn-watch { width: 100%; background: #00b894; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .success-msg { color: #2ed573; font-size: 13px; margin-top: 8px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🦅 EagleDateing</h1>
-    <p style="text-align: center; font-size: 14px; color: #94a3b8; margin-bottom: 20px;">Global Profiles & Verified Connections</p>
+    <header>🦅 EagleDateing</header>
 
-    <!-- SAMPLE PROFILE CARD -->
-    <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <h3>Priya Sharma, 24</h3>
-            <span class="badge">Online</span>
-        </div>
-        <div class="info-row">📍 <strong>Location:</strong> Mumbai, India (Global)</div>
-        <div class="info-row">📏 <strong>Height:</strong> 5'4"</div>
-        <div class="info-row">🎯 <strong>Choices/Similarity:</strong> Looking for Opposite Vibes</div>
-        <div class="info-row">🚭 <strong>Habits:</strong> Non-Smoker, Teetotaler</div>
-        <div class="info-row">🎨 <strong>Hobbies:</strong> Traveling, Photography, Music</div>
-        
-        <!-- CONTACT SECTION WITH AD LOCK -->
-        <div id="contact-section">
-            <div class="number-locked" id="lock-status">🔒 Mobile Number Locked (1000 Ads Required)</div>
-            <button class="btn btn-primary" onclick="showAdSystem()">Contact / Get Mobile Number</button>
-        </div>
+    <!-- TOP AD BANNER PLACEHOLDER -->
+    <div class="ad-container">
+        <p>✨ Sponsored Advertisement ✨</p>
+        <!-- PASTE YOUR REAL AD CODE HERE IN FUTURE -->
+        <div style="font-size: 11px; color: #666; margin-top: 5px;">[Ad Slot - Google/Adsterra Banner]</div>
     </div>
 
-    <!-- AD WATCHING PLATFORM (BUSSINESS ENGINE) -->
-    <div class="ad-box" id="ad-platform">
-        <h4 style="color: #f59e0b;">📺 Video Ad Network</h4>
-        <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Number dekhne ke liye ad poora dekhein</p>
-        <div class="counter-text">Ads Watched: <span id="ad-count">0</span> / 1000</div>
-        
-        <!-- MOCK AD PLATFORM -->
-        <div id="ad-video-screen" style="background: #000; height: 100px; margin: 10px 0; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 12px;">
-            Click "Watch Ad" to start earning view points
-        </div>
-        
-        <button class="btn btn-success" id="ad-btn" onclick="simulateWatchingAd()">▶️ Watch Video Ad (10 Sec)</button>
+    <!-- ACTION BUTTONS -->
+    <div class="action-buttons">
+        <button class="btn-action btn-reg" onclick="toggleModal(true)">➕ Create My Profile</button>
+        <button class="btn-action btn-search" onclick="toggleSearch()">🔍 Filter Location</button>
     </div>
-</div>
+
+    <!-- FILTER BOX -->
+    <div class="search-box" id="searchBox">
+        <select id="locationFilter" onchange="filterProfiles()">
+            <option value="all">Show All Locations (Global)</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Nagpur">Nagpur</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Pune">Pune</option>
+        </select>
+    </div>
+
+    <!-- PROFILES LIST -->
+    <div class="profiles-container" id="profilesContainer"></div>
+
+    <!-- BOTTOM AD BANNER PLACEHOLDER -->
+    <div class="ad-container" style="margin-top: 15px;">
+        <p>✨ Sponsored Advertisement ✨</p>
+        <!-- PASTE YOUR SECOND AD CODE HERE -->
+    </div>
+
+    <!-- REGISTRATION MODAL -->
+    <div class="modal" id="regModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+            <h3>Join EagleDateing</h3>
+            <form id="regForm" onsubmit="handleRegistration(event)">
+                <div class="form-group"><label>Your Name</label><input type="text" id="regName" required placeholder="e.g., Amit Kumar"></div>
+                <div class="form-group"><label>Age</label><input type="number" id="regAge" required min="18" max="60" placeholder="e.g., 25"></div>
+                <div class="form-group">
+                    <label>City/Location</label>
+                    <select id="regLocation">
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Pune">Pune</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Mobile Number (Kept Safe/Locked)</label><input type="text" id="regPhone" required placeholder="e.g., 98765xxxxx"></div>
+                <button type="submit" class="form-submit">Publish My Profile Live</button>
+            </form>
+        </div>
+    </div>
 
 <script>
-    let currentAds = 0;
-    const targetAds = 1000;
+    // Initial Demo Profiles Setup (Safe, realistic and imaginary data)
+    const baseProfiles = [
+        { id: 1, name: "Priya Sharma", age: 24, location: "Mumbai", height: "5'4\"", habits: "Non-Smoker", hobbies: "Music, Traveling" },
+        { id: 2, name: "Sneha Deshmukh", age: 22, location: "Nagpur", height: "5'3\"", habits: "Teetotaler", hobbies: "Reading, Cooking" },
+        { id: 3, name: "Anjali Singh", age: 26, location: "Delhi", height: "5'5\"", habits: "Non-Smoker", hobbies: "Photography, Fitness" },
+        { id: 4, name: "Riya Patel", age: 23, location: "Pune", height: "5'2\"", habits: "Teetotaler", hobbies: "Dancing, Movies" },
+        { id: 5, name: "Kiran Rao", age: 25, location: "Nagpur", height: "5'6\"", habits: "Non-Smoker", hobbies: "Painting, Yoga" }
+    ];
 
-    function showAdSystem() {
-        document.getElementById('ad-platform').style.display = 'block';
-        document.getElementById('ad-platform').scrollIntoView({ behavior: 'smooth' });
-    }
+    // Load custom profiles from LocalStorage if any user registers
+    let customProfiles = JSON.parse(localStorage.getItem('eagle_custom_profiles')) || [];
+    let allProfiles = [...customProfiles, ...baseProfiles];
 
-    function simulateWatchingAd() {
-        let btn = document.getElementById('ad-btn');
-        let videoScreen = document.getElementById('ad-video-screen');
+    // Track ad counts for each profile separately
+    let adCounts = JSON.parse(localStorage.getItem('eagle_ad_counts')) || {};
+
+    function renderProfiles(data) {
+        const container = document.getElementById('profilesContainer');
+        container.innerHTML = '';
         
-        btn.disabled = true;
-        btn.innerText = "⏳ Watching Ad... (Don't Close)";
-        videoScreen.innerHTML = "<span style='color: #f59e0b; font-weight:bold; animation: blink 1s infinite;'>🎬 [AD VIDEO RUNNING] Earning Revenue...</span>";
+        if(data.length === 0) {
+            container.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">No profiles found in this city.</p>';
+            return;
+        }
 
-        // Simulating 3 seconds ad for fast testing, can be updated to 10-15 secs
-        setTimeout(() => {
-            currentAds++;
-            document.getElementById('ad-count').innerText = currentAds;
+        data.forEach(p => {
+            const currentCount = adCounts[p.id] || 0;
+            const isLocked = currentCount < 1000;
             
-            btn.disabled = false;
-            btn.innerText = "▶️ Watch Video Ad (10 Sec)";
-            videoScreen.innerHTML = "<span style='color: #10b981;'>✅ Ad Completed! +1 Count Added</span>";
-
-            // CHECK IF 1000 ADS ARE DONE
-            if (currentAds >= targetAds) {
-                document.getElementById('lock-status').innerHTML = "🔓 UNLOCKED: +91 98765 43210";
-                document.getElementById('lock-status').style.background = "#10b981";
-                document.getElementById('lock-status').style.color = "white";
-                document.getElementById('ad-platform').style.display = 'none';
-                alert("Mubarak ho! 1000 Ads poore hue. Mobile Number unlock ho gaya hai.");
-            }
-        }, 3000);
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+            card.innerHTML = `
+                <div class="profile-header">
+                    <span class="profile-name">${p.name}, ${p.age}</span>
+                    <span class="status-online">Online</span>
+                </div>
+                <div class="info-row"><strong>📍 Location:</strong> ${p.location}, India</div>
+                <div class="info-row"><strong>📏 Height:</strong> ${p.height || "5'4\""}</div>
+                <div class="info-row"><strong>🚭 Habits:</strong> ${p.habits}</div>
+                <div class="info-row"><strong>🎨 Hobbies:</strong> ${p.hobbies}</div>
+                
+                ${isLocked ? `
+                    <div class="lock-box" id="lock-${p.id}">🔒 Mobile Number Locked (1000 Ads Required)</div>
+                    <button class="btn-unlock" id="btn-main-${p.id}" onclick="showAdNetwork(${p.id})">Contact / Get Mobile Number</button>
+                    
+                    <div class="ad-network-box" id="ad-net-${p.id}" style="display:none;">
+                        <div class="ad-count">Ads Watched: <span id="count-${p.id}">${currentCount}</span> / 1000</div>
+                        <button class="btn-watch" onclick="simulateAdWatch(${p.id})">▶️ Watch Video Ad (10 Sec)</button>
+                        <div class="success-msg" id="msg-${p.id}">✔️ Ad Completed! +1 Count Added</div>
+                    </div>
+                ` : `
+                    <div class="lock-box" style="background:#00b894; color:white; border-color:#00b894;">🔓 Number Unlocked: ${p.phone || "9823****** (Demo)"}</div>
+                `}
+            `;
+            container.appendChild(card);
+        });
     }
+
+    function toggleModal(show) {
+        document.getElementById('regModal').style.display = show ? 'flex' : 'none';
+    }
+
+    function toggleSearch() {
+        const box = document.getElementById('searchBox');
+        box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function handleRegistration(e) {
+        e.preventDefault();
+        const newProfile = {
+            id: Date.now(), // Unique ID
+            name: document.getElementById('regName').value,
+            age: document.getElementById('regAge').value,
+            location: document.getElementById('regLocation').value,
+            phone: document.getElementById('regPhone').value,
+            height: "5'4\"",
+            habits: "Non-Smoker",
+            hobbies: "Chatting, Making Friends"
+        };
+
+        customProfiles.unshift(newProfile); // Add new user profile to the top
+        localStorage.setItem('eagle_custom_profiles', JSON.stringify(customProfiles));
+        
+        allProfiles = [...customProfiles, ...baseProfiles];
+        renderProfiles(allProfiles);
+        
+        e.target.reset();
+        toggleModal(false);
+        alert("🎉 Congratulations! Your profile is live on EagleDateing.");
+    }
+
+    function filterProfiles() {
+        const city = document.getElementById('locationFilter').value;
+        if(city === 'all') {
+            renderProfiles(allProfiles);
+        } else {
+            const filtered = allProfiles.filter(p => p.location.toLowerCase() === city.toLowerCase());
+            renderProfiles(filtered);
+        }
+    }
+
+    function showAdNetwork(id) {
+        document.getElementById(`ad-net-${id}`).style.display = 'block';
+        document.getElementById(`btn-main-${id}`).style.display = 'none';
+    }
+
+    function simulateAdWatch(id) {
+        // Here you can insert real pop-under or rewards ad link triggers
+        // example: window.open('YOUR_AD_LINK', '_blank');
+
+        let current = adCounts[id] || 0;
+        if(current < 1000) {
+            current += 1;
+            adCounts[id] = current;
+            localStorage.setItem('eagle_ad_counts', JSON.stringify(adCounts));
+            
+            document.getElementById(`count-${id}`).innerText = current;
+            const msg = document.getElementById(`msg-${id}`);
+            msg.style.display = 'block';
+            
+            setTimeout(() => { msg.style.display = 'none'; }, 2000);
+
+            if(current >= 1000) {
+                alert("🎉 1000 Ads Completed! Contact Unlocked.");
+                renderProfiles(allProfiles);
+            }
+        }
+    }
+
+    // Initial Load
+    renderProfiles(allProfiles);
 </script>
 </body>
 </html>
