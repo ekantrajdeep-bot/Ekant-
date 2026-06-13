@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EagleDateing - Live Match & Ads</title>
+    <title>EagleDateing - Welcome to Live Match</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #121212; color: #ffffff; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; }
         
+        header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.3); }
+        
+        /* Attractive Welcome Message Banner */
+        .welcome-banner { width: 100%; max-width: 450px; background: linear-gradient(135deg, #1e1e2f, #252542); border: 1px solid #ff4e50; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .welcome-banner h2 { font-size: 20px; color: #f9d423; margin-bottom: 5px; }
+        .welcome-banner p { font-size: 13px; color: #e0e0e0; line-height: 1.4; }
+        .welcome-highlight { color: #00b894; font-weight: bold; }
+
         /* Real Ad Slots */
         .ad-slot { width: 100%; max-width: 450px; background: #1e1e1e; border: 1px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; min-height: 60px; }
         
         .action-buttons { width: 100%; max-width: 450px; display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; text-align: center; }
-        .btn-reg { background-color: #00b894; color: white; }
+        .btn-action { flex: 1; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; text-align: center; transition: 0.2s; }
+        .btn-reg { background: linear-gradient(135deg, #00b894, #00cec9); color: white; box-shadow: 0 4px 10px rgba(0, 184, 148, 0.2); }
         .btn-search { background-color: #0984e3; color: white; }
 
         /* Modal style */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; padding: 20px; }
-        .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; }
+        .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; border: 1px solid #333; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: #aaa; }
         .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; }
-        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
+        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
         .close-btn { float: right; cursor: pointer; color: #aaa; font-size: 20px; }
 
         /* Profiles style */
@@ -42,11 +49,14 @@
 
     <header>🦅 EagleDateing</header>
 
-    <!-- TOP REAL AD SLOT -->
+    <div class="welcome-banner">
+        <h2>👋 Welcome to EagleDateing!</h2>
+        <p>Apne aas-paas ke verified singles se judiye. Sirf 1 minute mein apni profile banayein aur live chat shuru karein! <br><span class="welcome-highlight">🔒 Aapka mobile number poori tarah surakshit hai.</span></p>
+    </div>
+
     <div class="ad-slot" id="top-ad">
         <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Top) ✨</p>
-        <!-- [Adsterra ya Google AdSense ka code block future mein yahan dalega] -->
-    </div>
+        </div>
 
     <div class="action-buttons">
         <button class="btn-action btn-reg" onclick="toggleModal(true)">➕ Create My Profile</button>
@@ -62,16 +72,12 @@
         </select>
     </div>
 
-    <!-- PROFILES LIST -->
     <div id="profilesContainer" style="width: 100%; max-width: 450px;"></div>
 
-    <!-- BOTTOM REAL AD SLOT -->
     <div class="ad-slot" id="bottom-ad" style="margin-top: 15px;">
         <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Bottom) ✨</p>
-        <!-- [Doosra Ad code block future mein yahan dalega] -->
-    </div>
+        </div>
 
-    <!-- REGISTRATION MODAL -->
     <div class="modal" id="regModal">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
@@ -98,7 +104,7 @@
     </div>
 
 <script>
-    // Appended User's Personal ImgBB API Key
+    // Embedded User's Real ImgBB API Key from previous confirmation
     const IMGBB_API_KEY = "0871c53c4fe16febda45c2c70f8d2b64"; 
 
     const baseProfiles = [
@@ -154,13 +160,14 @@
         
         if (!fileInput.files[0]) return alert("Please select a profile photo!");
         
-        submitBtn.innerText = "Uploading Photo... Please wait...";
+        submitBtn.innerText = "Publishing & Uploading Photo...";
         submitBtn.disabled = true;
 
         const formData = new FormData();
         formData.append("image", fileInput.files[0]);
 
         try {
+            // Live Link Joining with ImgBB
             const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                 method: "POST",
                 body: formData
@@ -168,7 +175,7 @@
             const resData = await res.json();
             
             if(resData.success) {
-                const uploadedImageUrl = resData.data.url;
+                const uploadedImageUrl = resData.data.url; // Image direct Link generated
                 
                 const newProfile = {
                     id: Date.now(),
@@ -176,7 +183,7 @@
                     age: document.getElementById('regAge').value,
                     location: document.getElementById('regLocation').value,
                     phone: document.getElementById('regPhone').value,
-                    img: uploadedImageUrl
+                    img: uploadedImageUrl // Linked to the profile card
                 };
 
                 customProfiles.unshift(newProfile);
@@ -187,7 +194,7 @@
                 
                 toggleModal(false);
                 e.target.reset();
-                alert("🎉 Success! Your profile is live with your real photo!");
+                alert("🎉 Success! Your profile is live with your real photo link!");
             } else {
                 alert("Photo upload failed. Please try another image.");
             }
