@@ -3,65 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EagleDating - Find Your Match Globally</title>
+    <title>EagleDating & Smart Deals</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #121212; color: #ffffff; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
         header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.3); }
         
-        /* Global Welcome Banner */
-        .welcome-banner { width: 100%; max-width: 450px; background: linear-gradient(135deg, #1e1e2f, #252542); border: 1px solid #ff4e50; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .logo-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #f9d423; object-fit: cover; background-color: #252542; }
+        .welcome-banner { width: 100%; max-width: 450px; background: linear-gradient(135deg, #1e1e2f, #252542); border: 1px solid #ff4e50; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; }
+        .logo-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #f9d423; object-fit: cover; }
         .welcome-banner h2 { font-size: 22px; color: #f9d423; margin-bottom: 8px; }
         .welcome-banner p { font-size: 14px; color: #e0e0e0; line-height: 1.5; }
-        .welcome-highlight { color: #00b894; font-weight: bold; display: block; margin-top: 5px; }
 
-        /* Real Ad Slots */
-        .ad-slot { width: 100%; max-width: 450px; background: #1e1e1e; border: 1px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; min-height: 60px; }
-        
+        /* SHOPPING AFFILIATE BUTTONS SECTION */
+        .shopping-section { width: 100%; max-width: 450px; background: #1e1e1e; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
+        .shopping-section h3 { text-align: center; color: #f9d423; margin-bottom: 10px; font-size: 18px; }
+        .shop-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: 8px; font-weight: bold; font-size: 15px; text-decoration: none; cursor: pointer; text-align: center; color: white; transition: 0.2s; }
+        .btn-amazon { background: linear-gradient(135deg, #ff9900, #ffb74d); color: #111; }
+        .btn-flipkart { background: linear-gradient(135deg, #2874f0, #00d2ff); }
+        .btn-shopsy { background: linear-gradient(135deg, #9b51e0, #e040fb); }
+        .btn-ajio { background: linear-gradient(135deg, #2c3e50, #34495e); }
+        .btn-gifts { background: linear-gradient(135deg, #ff4757, #ff6b81); animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
         .action-buttons { width: 100%; max-width: 450px; display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-action { flex: 1; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; text-align: center; transition: 0.2s; }
-        .btn-reg { background: linear-gradient(135deg, #00b894, #00cec9); color: white; box-shadow: 0 4px 10px rgba(0, 184, 148, 0.2); }
+        .btn-action { flex: 1; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; text-align: center; }
+        .btn-reg { background: linear-gradient(135deg, #00b894, #00cec9); color: white; }
         .btn-search { background-color: #0984e3; color: white; }
 
-        /* Modal style */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; padding: 20px; }
         .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; border: 1px solid #333; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: #aaa; }
         .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; }
-        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
         .close-btn { float: right; cursor: pointer; color: #aaa; font-size: 20px; }
 
-        /* Profiles style */
         .search-box { display: none; width: 100%; max-width: 450px; background: #1e1e1e; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
         .profile-card { background: #1e1e1e; border-radius: 15px; padding: 20px; margin-bottom: 20px; width: 100%; max-width: 450px; border: 1px solid #2d2d2d; }
-        .profile-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; background: #2d2d2d; }
+        .profile-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; }
         .profile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .lock-box { background: #2d2d2d; border-radius: 8px; padding: 12px; text-align: center; margin-top: 15px; font-weight: bold; }
-        .btn-unlock { width: 100%; background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         
+        .age-tag { color: #ff9f43; font-weight: bold; font-size: 20px; }
+        
+        .btn-say-hi { width: 100%; background: linear-gradient(135deg, #00b894, #00cec9); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        .btn-unlock { width: 100%; background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 8px; cursor: pointer; }
+        
+        .lock-box { background: #2d2d2d; border-radius: 8px; padding: 12px; text-align: center; margin-top: 15px; font-weight: bold; }
         .ad-network-box { margin-top: 15px; background: #151515; border: 1px dashed #ff9f43; padding: 15px; border-radius: 10px; text-align: center; }
         .btn-watch { width: 100%; background: #00b894; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .whatsapp-unlocked { background: #25d366; color: white; border-radius: 8px; padding: 12px; text-align: center; margin-top: 15px; font-weight: bold; }
+
+        /* CHAT SYSTEM */
+        .chat-box-modal { display: none; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 450px; height: 400px; background: #1e1e1e; border-top-left-radius: 20px; border-top-right-radius: 20px; border: 2px solid #ff4e50; z-index: 150; flex-direction: column; }
+        .chat-header { background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; border-top-left-radius: 17px; border-top-right-radius: 17px; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #121212; }
+        .msg { max-width: 80%; padding: 10px 14px; border-radius: 15px; font-size: 14px; }
+        .msg.incoming { background: #2d2d2d; color: white; align-self: flex-start; border-bottom-left-radius: 0; }
+        .msg.outgoing { background: #00b894; color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+        .chat-footer { padding: 10px; background: #1e1e1e; display: flex; gap: 10px; }
+        .chat-input { flex: 1; padding: 10px; background: #2d2d2d; border: 1px solid #444; border-radius: 20px; color: white; padding-left: 15px; }
+        .btn-send { background: #ff4e50; border: none; color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>🦅 EagleDating</header>
 
-    <!-- WELCOME MESSAGE BANNER -->
     <div class="welcome-banner">
-        <!-- Default geometric logo, auto-replaces when you add custom logo link -->
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150" alt="EagleDating Logo" class="logo-img" id="appLogo">
-        
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150" alt="EagleDating Logo" class="logo-img">
         <h2>Welcome to EagleDating!</h2>
-        <p>Connect with verified singles in your area instantly. Create your beautiful live profile in less than 1 minute to unlock matches! <span class="welcome-highlight">🔒 Your phone number is completely secured.</span></p>
+        <p>Connect with verified singles instantly and explore premium shopping deals!</p>
     </div>
 
-    <!-- TOP AD SLOT -->
-    <div class="ad-slot" id="top-ad">
-        <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Top) ✨</p>
+    <!-- AFFILIATE STORES CORNER -->
+    <div class="shopping-section">
+        <h3>🛒 Smart Deals Big Discount Store</h3>
+        
+        <!-- Amazon Link -->
+        <a href="https://amzn.to/4ozmuYI" target="_blank" class="shop-btn btn-amazon">🛍️ Shop on Amazon (Big Discount)</a>
+        
+        <!-- Flipkart (Abhi Ispe bhi Shopsy wale offer load honge) -->
+        <a href="https://www.shopsy.in/search?q=todays+deal&sid=clo,8on&as=on&as-show=on&fbclid=IwVERDUASadflleHRuA2FlbQIxMABzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR6utiJ6XJvAw1DUMff1FpuZMo38iojyUK50G01CfQtM3NST4ILaOsrL_QAgtA_aem_3eGRw7PYMeZ4BP4LGpreYg" target="_blank" class="shop-btn btn-flipkart">🛍️ Shop on Flipkart</a>
+        
+        <!-- Shopsy Original Link -->
+        <a href="https://www.shopsy.in/search?q=todays+deal&sid=clo,8on&as=on&as-show=on&fbclid=IwVERDUASadflleHRuA2FlbQIxMABzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR6utiJ6XJvAw1DUMff1FpuZMo38iojyUK50G01CfQtM3NST4ILaOsrL_QAgtA_aem_3eGRw7PYMeZ4BP4LGpreYg" target="_blank" class="shop-btn btn-shopsy">🛍️ Shopsy Budget Store</a>
+        
+        <!-- Ajio & Gifts Menu -->
+        <a href="https://amzn.to/4ozmuYI" target="_blank" class="shop-btn btn-ajio">👔 Ajio Trendy Fashion</a>
+        <a href="https://www.shopsy.in/search?q=todays+deal&sid=clo,8on&as=on&as-show=on&fbclid=IwVERDUASadflleHRuA2FlbQIxMABzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR6utiJ6XJvAw1DUMff1FpuZMo38iojyUK50G01CfQtM3NST4ILaOsrL_QAgtA_aem_3eGRw7PYMeZ4BP4LGpreYg" target="_blank" class="shop-btn btn-gifts">🎁 Special Gifts Menu (Claim Now)</a>
     </div>
 
     <div class="action-buttons">
@@ -74,17 +109,11 @@
             <option value="all">Show All Locations</option>
             <option value="Nagpur">Nagpur</option>
             <option value="Mumbai">Mumbai</option>
-            <option value="Delhi">Delhi</option>
         </select>
     </div>
 
     <!-- PROFILES LIST -->
     <div id="profilesContainer" style="width: 100%; max-width: 450px;"></div>
-
-    <!-- BOTTOM AD SLOT -->
-    <div class="ad-slot" id="bottom-ad" style="margin-top: 15px;">
-        <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Bottom) ✨</p>
-    </div>
 
     <!-- REGISTRATION MODAL -->
     <div class="modal" id="regModal">
@@ -93,22 +122,31 @@
             <h3 style="margin-bottom:15px; color:#00b894;">Create Your Live Profile</h3>
             <form id="regForm" onsubmit="handleRegistration(event)">
                 <div class="form-group"><label>Name</label><input type="text" id="regName" required placeholder="Your Name"></div>
-                <div class="form-group"><label>Age</label><input type="number" id="regAge" required min="18" placeholder="Age"></div>
+                <div class="form-group"><label>Age</label><input type="number" id="regAge" required min="18"></div>
                 <div class="form-group">
                     <label>City</label>
                     <select id="regLocation">
                         <option value="Nagpur">Nagpur</option>
                         <option value="Mumbai">Mumbai</option>
-                        <option value="Delhi">Delhi</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Mobile/WhatsApp Number</label><input type="text" id="regPhone" required placeholder="+91 XXXXX XXXXX"></div>
-                <div class="form-group">
-                    <label>Upload Profile Photo</label>
-                    <input type="file" id="regPhotoFile" accept="image/*" required>
-                </div>
+                <div class="form-group"><label>WhatsApp Number</label><input type="text" id="regPhone" required placeholder="+91 XXXXX XXXXX"></div>
+                <div class="form-group"><label>Profile Photo</label><input type="file" id="regPhotoFile" accept="image/*" required></div>
                 <button type="submit" class="form-submit" id="submitBtn">Publish Live Profile</button>
             </form>
+        </div>
+    </div>
+
+    <!-- CHAT BOX -->
+    <div class="chat-box-modal" id="chatBoxModal">
+        <div class="chat-header">
+            <span id="chatPartnerName">Chat</span>
+            <span style="cursor:pointer; font-size: 20px;" onclick="closeChat()">&times;</span>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-footer">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type a message...">
+            <button class="btn-send" onclick="sendUserMessage()">Send</button>
         </div>
     </div>
 
@@ -137,21 +175,22 @@
             card.innerHTML = `
                 <img class="profile-img" src="${p.img}" alt="Profile">
                 <div class="profile-header">
-                    <span style="font-size:20px; font-weight:bold;">${p.name}, ${p.age}</span>
+                    <span style="font-size:20px; font-weight:bold;">${p.name}, <span class="age-tag">${p.age} Yrs</span></span>
                     <span style="background:#2ed573; padding:2px 8px; border-radius:10px; font-size:12px;">Online</span>
                 </div>
                 <div style="margin-bottom:5px; font-size:14px;">📍 City: ${p.location}</div>
                 
+                <button class="btn-say-hi" onclick="openChat('${p.name}', ${p.id})">Say Hi 👋</button>
+                
                 ${isLocked ? `
-                    <div class="lock-box" id="lock-${p.id}">🔒 Number Locked (1000 Ads Required)</div>
+                    <div class="lock-box" id="lock-${p.id}">🔒 WhatsApp Locked (1000 Ads Required)</div>
                     <button class="btn-unlock" id="btn-main-${p.id}" onclick="showAdBox(${p.id})">Get Mobile Number</button>
-                    
                     <div class="ad-network-box" id="ad-net-${p.id}" style="display:none;">
                         <div style="color:#ff9f43; font-weight:bold; margin-bottom:10px;">Ads Watched: <span id="count-${p.id}">${currentCount}</span> / 1000</div>
                         <button class="btn-watch" onclick="watchAd(${p.id})">▶️ Watch Video Ad</button>
                     </div>
                 ` : `
-                    <div class="lock-box" style="background:#00b894; color:white;">🔓 Number: ${p.phone}</div>
+                    <div class="whatsapp-unlocked">💬 WhatsApp No: ${p.phone}</div>
                 `}
             `;
             container.appendChild(card);
@@ -166,51 +205,66 @@
         const submitBtn = document.getElementById('submitBtn');
         const fileInput = document.getElementById('regPhotoFile');
         
-        if (!fileInput.files[0]) return alert("Please select a profile photo!");
-        
-        submitBtn.innerText = "Publishing & Uploading... Please wait...";
+        if (!fileInput.files[0]) return alert("Select photo!");
+        submitBtn.innerText = "Publishing...";
         submitBtn.disabled = true;
 
         const formData = new FormData();
         formData.append("image", fileInput.files[0]);
 
         try {
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData
-            });
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
             const resData = await res.json();
-            
             if(resData.success) {
-                const uploadedImageUrl = resData.data.url;
-                
                 const newProfile = {
                     id: Date.now(),
                     name: document.getElementById('regName').value,
                     age: document.getElementById('regAge').value,
                     location: document.getElementById('regLocation').value,
                     phone: document.getElementById('regPhone').value,
-                    img: uploadedImageUrl
+                    img: resData.data.url
                 };
-
                 customProfiles.unshift(newProfile);
                 localStorage.setItem('eagle_live_profiles', JSON.stringify(customProfiles));
-                
                 allProfiles = [...customProfiles, ...baseProfiles];
                 renderProfiles(allProfiles);
-                
                 toggleModal(false);
                 e.target.reset();
-                alert("🎉 Success! Your profile is live with your real photo link!");
-            } else {
-                alert("Photo upload failed. Please try another image.");
             }
-        } catch (err) {
-            alert("Error connecting to storage server.");
-        } finally {
-            submitBtn.innerText = "Publish Live Profile";
-            submitBtn.disabled = false;
-        }
+        } catch (err) { alert("Upload error"); }
+        finally { submitBtn.disabled = false; submitBtn.innerText = "Publish Live Profile"; }
+    }
+
+    function openChat(name, id) {
+        document.getElementById('chatPartnerName').innerText = "Chat with " + name;
+        const chatBody = document.getElementById('chatBody');
+        chatBody.innerHTML = '';
+        document.getElementById('chatBoxModal').style.display = 'flex';
+
+        setTimeout(() => { appendMessage("Hi dear! Kaise ho aap? Se milkar acha laga! ❤️", "incoming"); }, 400);
+        setTimeout(() => { appendMessage("Aapki profile aur DP bahot sundar hai, aap toh sach me bahot jansom (handsome) lag rahe ho! 😍✨", "incoming"); }, 2000);
+    }
+
+    function closeChat() { document.getElementById('chatBoxModal').style.display = 'none'; }
+    function appendMessage(text, side) {
+        const chatBody = document.getElementById('chatBody');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `msg ${side}`;
+        msgDiv.innerText = text;
+        chatBody.appendChild(msgDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function sendUserMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if(!text) return;
+        appendMessage(text, "outgoing");
+        input.value = '';
+
+        setTimeout(() => {
+            appendMessage("Aww sweet! Agar mera personal WhatsApp chahiye ya mujhse gift lena hai toh upar diye gaye Gifts Menu or Stores pe click karke thodi shopping kar lo na, fir hum live video call pe baat karenge! 😘", "incoming");
+        }, 1500);
     }
 
     function filterProfiles() {
@@ -231,14 +285,9 @@
             adCounts[id] = current;
             localStorage.setItem('eagle_ad_clicks', JSON.stringify(adCounts));
             document.getElementById(`count-${id}`).innerText = current;
-
-            if(current >= 1000) {
-                alert("Unlocked!");
-                renderProfiles(allProfiles);
-            }
+            if(current >= 1000) { renderProfiles(allProfiles); }
         }
     }
-
     renderProfiles(allProfiles);
 </script>
 </body>
