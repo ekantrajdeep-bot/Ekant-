@@ -3,139 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EagleDateing - Premium Match</title>
+    <title>EagleDateing - Live Match & Ads</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #121212; color: #ffffff; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.4); }
+        header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; }
         
-        /* Ad Banner Section */
-        .ad-container { width: 100%; max-width: 450px; background: #1e1e1e; border: 2px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; font-size: 12px; color: #ff9f43; }
+        /* Real Ad Slots */
+        .ad-slot { width: 100%; max-width: 450px; background: #1e1e1e; border: 1px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; min-height: 60px; }
         
         .action-buttons { width: 100%; max-width: 450px; display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; font-size: 14px; }
+        .btn-action { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; text-align: center; }
         .btn-reg { background-color: #00b894; color: white; }
         .btn-search { background-color: #0984e3; color: white; }
 
-        /* Registration Form Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 100; padding: 20px; }
-        .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; border: 1px solid #333; }
-        .modal-content h3 { margin-bottom: 15px; color: #00b894; }
+        /* Modal style */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; padding: 20px; }
+        .modal-content { background: #1e1e1e; padding: 20px; border-radius: 12px; width: 100%; max-width: 400px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: #aaa; }
         .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: white; }
-        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .form-submit { width: 100%; padding: 12px; background: #00b894; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
         .close-btn { float: right; cursor: pointer; color: #aaa; font-size: 20px; }
 
-        /* Search Section */
-        .search-box { display: none; width: 100%; max-width: 450px; background: #1e1e1e; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
-        .search-box select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #444; color: white; border-radius: 6px; }
-
-        /* Profiles Container */
-        .profiles-container { width: 100%; max-width: 450px; }
-        .profile-card { background: #1e1e1e; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #2d2d2d; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        .profile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .profile-name { font-size: 22px; font-weight: bold; color: #fff; }
-        .status-online { background: #ff4757; color: white; padding: 3px 8px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        .info-row { margin: 8px 0; font-size: 14px; color: #ccc; display: flex; align-items: center; }
-        .info-row strong { color: #aaa; width: 100px; display: inline-block; }
+        /* Profiles style */
+        .search-box { display: none; width: 100%; max-width: 450px; background: #1e1e1e; padding: 12px; border-radius: 10px; margin-bottom: 15px; }
+        .profile-card { background: #1e1e1e; border-radius: 15px; padding: 20px; margin-bottom: 20px; width: 100%; max-width: 450px; border: 1px solid #2d2d2d; }
+        .profile-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; background: #2d2d2d; }
+        .profile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .lock-box { background: #2d2d2d; border-radius: 8px; padding: 12px; text-align: center; margin-top: 15px; font-weight: bold; }
+        .btn-unlock { width: 100%; background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; }
         
-        .lock-box { background: #2d2d2d; border-radius: 8px; padding: 12px; text-align: center; font-size: 14px; font-weight: bold; color: #aaa; margin-top: 15px; border: 1px solid #3d3d3d; }
-        .btn-unlock { width: 100%; background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.3); transition: transform 0.2s; }
-        
-        /* Ad Network Box inside Counter */
         .ad-network-box { margin-top: 15px; background: #151515; border: 1px dashed #ff9f43; padding: 15px; border-radius: 10px; text-align: center; }
-        .ad-count { font-size: 18px; color: #ff9f43; font-weight: bold; margin-bottom: 10px; }
-        .btn-watch { width: 100%; background: #00b894; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; }
-        .success-msg { color: #2ed573; font-size: 13px; margin-top: 8px; display: none; }
+        .btn-watch { width: 100%; background: #00b894; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>🦅 EagleDateing</header>
 
-    <!-- TOP AD BANNER PLACEHOLDER -->
-    <div class="ad-container">
-        <p>✨ Sponsored Advertisement ✨</p>
-        <!-- PASTE YOUR REAL AD CODE HERE IN FUTURE -->
-        <div style="font-size: 11px; color: #666; margin-top: 5px;">[Ad Slot - Google/Adsterra Banner]</div>
+    <!-- TOP REAL AD SLOT -->
+    <div class="ad-slot" id="top-ad">
+        <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Top) ✨</p>
+        <!-- [Adsterra ya Google AdSense ka code block future mein yahan dalega] -->
     </div>
 
-    <!-- ACTION BUTTONS -->
     <div class="action-buttons">
         <button class="btn-action btn-reg" onclick="toggleModal(true)">➕ Create My Profile</button>
         <button class="btn-action btn-search" onclick="toggleSearch()">🔍 Filter Location</button>
     </div>
 
-    <!-- FILTER BOX -->
     <div class="search-box" id="searchBox">
         <select id="locationFilter" onchange="filterProfiles()">
-            <option value="all">Show All Locations (Global)</option>
-            <option value="Mumbai">Mumbai</option>
+            <option value="all">Show All Locations</option>
             <option value="Nagpur">Nagpur</option>
+            <option value="Mumbai">Mumbai</option>
             <option value="Delhi">Delhi</option>
-            <option value="Pune">Pune</option>
         </select>
     </div>
 
     <!-- PROFILES LIST -->
-    <div class="profiles-container" id="profilesContainer"></div>
+    <div id="profilesContainer" style="width: 100%; max-width: 450px;"></div>
 
-    <!-- BOTTOM AD BANNER PLACEHOLDER -->
-    <div class="ad-container" style="margin-top: 15px;">
-        <p>✨ Sponsored Advertisement ✨</p>
-        <!-- PASTE YOUR SECOND AD CODE HERE -->
+    <!-- BOTTOM REAL AD SLOT -->
+    <div class="ad-slot" id="bottom-ad" style="margin-top: 15px;">
+        <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Bottom) ✨</p>
+        <!-- [Doosra Ad code block future mein yahan dalega] -->
     </div>
 
     <!-- REGISTRATION MODAL -->
     <div class="modal" id="regModal">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
-            <h3>Join EagleDateing</h3>
+            <h3 style="margin-bottom:15px; color:#00b894;">Create Your Live Profile</h3>
             <form id="regForm" onsubmit="handleRegistration(event)">
-                <div class="form-group"><label>Your Name</label><input type="text" id="regName" required placeholder="e.g., Amit Kumar"></div>
-                <div class="form-group"><label>Age</label><input type="number" id="regAge" required min="18" max="60" placeholder="e.g., 25"></div>
+                <div class="form-group"><label>Name</label><input type="text" id="regName" required placeholder="Your Name"></div>
+                <div class="form-group"><label>Age</label><input type="number" id="regAge" required min="18" placeholder="Age"></div>
                 <div class="form-group">
-                    <label>City/Location</label>
+                    <label>City</label>
                     <select id="regLocation">
                         <option value="Nagpur">Nagpur</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Delhi">Delhi</option>
-                        <option value="Pune">Pune</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Mobile Number (Kept Safe/Locked)</label><input type="text" id="regPhone" required placeholder="e.g., 98765xxxxx"></div>
-                <button type="submit" class="form-submit">Publish My Profile Live</button>
+                <div class="form-group"><label>Mobile Number (Locked for Ads)</label><input type="text" id="regPhone" required placeholder="WhatsApp/Phone Number"></div>
+                <div class="form-group">
+                    <label>Upload Profile Photo</label>
+                    <input type="file" id="regPhotoFile" accept="image/*" required>
+                </div>
+                <button type="submit" class="form-submit" id="submitBtn">Publish Live Profile</button>
             </form>
         </div>
     </div>
 
 <script>
-    // Initial Demo Profiles Setup (Safe, realistic and imaginary data)
+    // Appended User's Personal ImgBB API Key
+    const IMGBB_API_KEY = "0871c53c4fe16febda45c2c70f8d2b64"; 
+
     const baseProfiles = [
-        { id: 1, name: "Priya Sharma", age: 24, location: "Mumbai", height: "5'4\"", habits: "Non-Smoker", hobbies: "Music, Traveling" },
-        { id: 2, name: "Sneha Deshmukh", age: 22, location: "Nagpur", height: "5'3\"", habits: "Teetotaler", hobbies: "Reading, Cooking" },
-        { id: 3, name: "Anjali Singh", age: 26, location: "Delhi", height: "5'5\"", habits: "Non-Smoker", hobbies: "Photography, Fitness" },
-        { id: 4, name: "Riya Patel", age: 23, location: "Pune", height: "5'2\"", habits: "Teetotaler", hobbies: "Dancing, Movies" },
-        { id: 5, name: "Kiran Rao", age: 25, location: "Nagpur", height: "5'6\"", habits: "Non-Smoker", hobbies: "Painting, Yoga" }
+        { id: 1, name: "Priya Sharma", age: 24, location: "Mumbai", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400", habits: "Non-Smoker", hobbies: "Music" },
+        { id: 2, name: "Sneha Deshmukh", age: 22, location: "Nagpur", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400", habits: "Teetotaler", hobbies: "Reading" }
     ];
 
-    // Load custom profiles from LocalStorage if any user registers
-    let customProfiles = JSON.parse(localStorage.getItem('eagle_custom_profiles')) || [];
+    let customProfiles = JSON.parse(localStorage.getItem('eagle_live_profiles')) || [];
     let allProfiles = [...customProfiles, ...baseProfiles];
-
-    // Track ad counts for each profile separately
-    let adCounts = JSON.parse(localStorage.getItem('eagle_ad_counts')) || {};
+    let adCounts = JSON.parse(localStorage.getItem('eagle_ad_clicks')) || {};
 
     function renderProfiles(data) {
         const container = document.getElementById('profilesContainer');
         container.innerHTML = '';
         
-        if(data.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">No profiles found in this city.</p>';
-            return;
-        }
-
         data.forEach(p => {
             const currentCount = adCounts[p.id] || 0;
             const isLocked = currentCount < 1000;
@@ -143,104 +121,110 @@
             const card = document.createElement('div');
             card.className = 'profile-card';
             card.innerHTML = `
+                <img class="profile-img" src="${p.img}" alt="Profile">
                 <div class="profile-header">
-                    <span class="profile-name">${p.name}, ${p.age}</span>
-                    <span class="status-online">Online</span>
+                    <span style="font-size:20px; font-weight:bold;">${p.name}, ${p.age}</span>
+                    <span style="background:#2ed573; padding:2px 8px; border-radius:10px; font-size:12px;">Online</span>
                 </div>
-                <div class="info-row"><strong>📍 Location:</strong> ${p.location}, India</div>
-                <div class="info-row"><strong>📏 Height:</strong> ${p.height || "5'4\""}</div>
-                <div class="info-row"><strong>🚭 Habits:</strong> ${p.habits}</div>
-                <div class="info-row"><strong>🎨 Hobbies:</strong> ${p.hobbies}</div>
+                <div style="margin-bottom:5px; font-size:14px;">📍 City: ${p.location}</div>
                 
                 ${isLocked ? `
-                    <div class="lock-box" id="lock-${p.id}">🔒 Mobile Number Locked (1000 Ads Required)</div>
-                    <button class="btn-unlock" id="btn-main-${p.id}" onclick="showAdNetwork(${p.id})">Contact / Get Mobile Number</button>
+                    <div class="lock-box" id="lock-${p.id}">🔒 Number Locked (1000 Ads Required)</div>
+                    <button class="btn-unlock" id="btn-main-${p.id}" onclick="showAdBox(${p.id})">Get Mobile Number</button>
                     
                     <div class="ad-network-box" id="ad-net-${p.id}" style="display:none;">
-                        <div class="ad-count">Ads Watched: <span id="count-${p.id}">${currentCount}</span> / 1000</div>
-                        <button class="btn-watch" onclick="simulateAdWatch(${p.id})">▶️ Watch Video Ad (10 Sec)</button>
-                        <div class="success-msg" id="msg-${p.id}">✔️ Ad Completed! +1 Count Added</div>
+                        <div style="color:#ff9f43; font-weight:bold; margin-bottom:10px;">Ads Watched: <span id="count-${p.id}">${currentCount}</span> / 1000</div>
+                        <button class="btn-watch" onclick="watchAd(${p.id})">▶️ Watch Video Ad</button>
                     </div>
                 ` : `
-                    <div class="lock-box" style="background:#00b894; color:white; border-color:#00b894;">🔓 Number Unlocked: ${p.phone || "9823****** (Demo)"}</div>
+                    <div class="lock-box" style="background:#00b894; color:white;">🔓 Number: ${p.phone || "9823xxxxxx"}</div>
                 `}
             `;
             container.appendChild(card);
         });
     }
 
-    function toggleModal(show) {
-        document.getElementById('regModal').style.display = show ? 'flex' : 'none';
-    }
+    function toggleModal(show) { document.getElementById('regModal').style.display = show ? 'flex' : 'none'; }
+    function toggleSearch() { const b = document.getElementById('searchBox'); b.style.display = b.style.display === 'block' ? 'none' : 'block'; }
 
-    function toggleSearch() {
-        const box = document.getElementById('searchBox');
-        box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function handleRegistration(e) {
+    async function handleRegistration(e) {
         e.preventDefault();
-        const newProfile = {
-            id: Date.now(), // Unique ID
-            name: document.getElementById('regName').value,
-            age: document.getElementById('regAge').value,
-            location: document.getElementById('regLocation').value,
-            phone: document.getElementById('regPhone').value,
-            height: "5'4\"",
-            habits: "Non-Smoker",
-            hobbies: "Chatting, Making Friends"
-        };
+        const submitBtn = document.getElementById('submitBtn');
+        const fileInput = document.getElementById('regPhotoFile');
+        
+        if (!fileInput.files[0]) return alert("Please select a profile photo!");
+        
+        submitBtn.innerText = "Uploading Photo... Please wait...";
+        submitBtn.disabled = true;
 
-        customProfiles.unshift(newProfile); // Add new user profile to the top
-        localStorage.setItem('eagle_custom_profiles', JSON.stringify(customProfiles));
-        
-        allProfiles = [...customProfiles, ...baseProfiles];
-        renderProfiles(allProfiles);
-        
-        e.target.reset();
-        toggleModal(false);
-        alert("🎉 Congratulations! Your profile is live on EagleDateing.");
+        const formData = new FormData();
+        formData.append("image", fileInput.files[0]);
+
+        try {
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: "POST",
+                body: formData
+            });
+            const resData = await res.json();
+            
+            if(resData.success) {
+                const uploadedImageUrl = resData.data.url;
+                
+                const newProfile = {
+                    id: Date.now(),
+                    name: document.getElementById('regName').value,
+                    age: document.getElementById('regAge').value,
+                    location: document.getElementById('regLocation').value,
+                    phone: document.getElementById('regPhone').value,
+                    img: uploadedImageUrl
+                };
+
+                customProfiles.unshift(newProfile);
+                localStorage.setItem('eagle_live_profiles', JSON.stringify(customProfiles));
+                
+                allProfiles = [...customProfiles, ...baseProfiles];
+                renderProfiles(allProfiles);
+                
+                toggleModal(false);
+                e.target.reset();
+                alert("🎉 Success! Your profile is live with your real photo!");
+            } else {
+                alert("Photo upload failed. Please try another image.");
+            }
+        } catch (err) {
+            alert("Error connecting to storage server.");
+        } finally {
+            submitBtn.innerText = "Publish Live Profile";
+            submitBtn.disabled = false;
+        }
     }
 
     function filterProfiles() {
         const city = document.getElementById('locationFilter').value;
-        if(city === 'all') {
-            renderProfiles(allProfiles);
-        } else {
-            const filtered = allProfiles.filter(p => p.location.toLowerCase() === city.toLowerCase());
-            renderProfiles(filtered);
-        }
+        if(city === 'all') renderProfiles(allProfiles);
+        else renderProfiles(allProfiles.filter(p => p.location === city));
     }
 
-    function showAdNetwork(id) {
+    function showAdBox(id) {
         document.getElementById(`ad-net-${id}`).style.display = 'block';
         document.getElementById(`btn-main-${id}`).style.display = 'none';
     }
 
-    function simulateAdWatch(id) {
-        // Here you can insert real pop-under or rewards ad link triggers
-        // example: window.open('YOUR_AD_LINK', '_blank');
-
+    function watchAd(id) {
         let current = adCounts[id] || 0;
         if(current < 1000) {
             current += 1;
             adCounts[id] = current;
-            localStorage.setItem('eagle_ad_counts', JSON.stringify(adCounts));
-            
+            localStorage.setItem('eagle_ad_clicks', JSON.stringify(adCounts));
             document.getElementById(`count-${id}`).innerText = current;
-            const msg = document.getElementById(`msg-${id}`);
-            msg.style.display = 'block';
-            
-            setTimeout(() => { msg.style.display = 'none'; }, 2000);
 
             if(current >= 1000) {
-                alert("🎉 1000 Ads Completed! Contact Unlocked.");
+                alert("Unlocked!");
                 renderProfiles(allProfiles);
             }
         }
     }
 
-    // Initial Load
     renderProfiles(allProfiles);
 </script>
 </body>
