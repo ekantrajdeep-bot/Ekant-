@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EagleDateing - Welcome to Live Match</title>
+    <title>EagleDateing - Find Your Match Globally</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #121212; color: #ffffff; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         
         header { width: 100%; max-width: 450px; background: linear-gradient(135deg, #ff4e50, #f9d423); padding: 15px; text-align: center; font-size: 24px; font-weight: bold; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(255, 78, 80, 0.3); }
         
-        /* Attractive Welcome Message Banner */
-        .welcome-banner { width: 100%; max-width: 450px; background: linear-gradient(135deg, #1e1e2f, #252542); border: 1px solid #ff4e50; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .welcome-banner h2 { font-size: 20px; color: #f9d423; margin-bottom: 5px; }
-        .welcome-banner p { font-size: 13px; color: #e0e0e0; line-height: 1.4; }
-        .welcome-highlight { color: #00b894; font-weight: bold; }
+        /* Global Welcome Banner */
+        .welcome-banner { width: 100%; max-width: 450px; background: linear-gradient(135deg, #1e1e2f, #252542); border: 1px solid #ff4e50; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .logo-img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 12px; border: 2px solid #f9d423; object-fit: cover; background-color: #252542; }
+        .welcome-banner h2 { font-size: 22px; color: #f9d423; margin-bottom: 8px; }
+        .welcome-banner p { font-size: 14px; color: #e0e0e0; line-height: 1.5; }
+        .welcome-highlight { color: #00b894; font-weight: bold; display: block; margin-top: 5px; }
 
         /* Real Ad Slots */
         .ad-slot { width: 100%; max-width: 450px; background: #1e1e1e; border: 1px dashed #ff9f43; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 15px; min-height: 60px; }
@@ -49,14 +50,19 @@
 
     <header>🦅 EagleDateing</header>
 
+    <!-- WELCOME MESSAGE BANNER (ENGLISH & GLOBAL) -->
     <div class="welcome-banner">
-        <h2>👋 Welcome to EagleDateing!</h2>
-        <p>Apne aas-paas ke verified singles se judiye. Sirf 1 minute mein apni profile banayein aur live chat shuru karein! <br><span class="welcome-highlight">🔒 Aapka mobile number poori tarah surakshit hai.</span></p>
+        <!-- Logo Display (Change URL in src attribute when you upload your custom logo to ImgBB) -->
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150" alt="EagleDateing Logo" class="logo-img" id="appLogo">
+        
+        <h2>Welcome to EagleDateing!</h2>
+        <p>Connect with verified singles in your area instantly. Create your beautiful live profile in less than 1 minute to unlock matches! <span class="welcome-highlight">🔒 Your phone number is completely secured.</span></p>
     </div>
 
+    <!-- TOP AD SLOT -->
     <div class="ad-slot" id="top-ad">
         <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Top) ✨</p>
-        </div>
+    </div>
 
     <div class="action-buttons">
         <button class="btn-action btn-reg" onclick="toggleModal(true)">➕ Create My Profile</button>
@@ -64,7 +70,7 @@
     </div>
 
     <div class="search-box" id="searchBox">
-        <select id="locationFilter" onchange="filterProfiles()">
+        <select id="locationFilter" onchange="filterProfiles()" style="width: 100%; padding: 10px; background: #2d2d2d; color: white; border-radius: 6px;">
             <option value="all">Show All Locations</option>
             <option value="Nagpur">Nagpur</option>
             <option value="Mumbai">Mumbai</option>
@@ -72,12 +78,15 @@
         </select>
     </div>
 
+    <!-- PROFILES LIST -->
     <div id="profilesContainer" style="width: 100%; max-width: 450px;"></div>
 
+    <!-- BOTTOM AD SLOT -->
     <div class="ad-slot" id="bottom-ad" style="margin-top: 15px;">
         <p style="font-size: 12px; color: #ff9f43;">✨ Sponsored Ad Slot (Bottom) ✨</p>
-        </div>
+    </div>
 
+    <!-- REGISTRATION MODAL -->
     <div class="modal" id="regModal">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleModal(false)">&times;</span>
@@ -93,7 +102,7 @@
                         <option value="Delhi">Delhi</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Mobile Number (Locked for Ads)</label><input type="text" id="regPhone" required placeholder="WhatsApp/Phone Number"></div>
+                <div class="form-group"><label>Mobile/WhatsApp Number</label><input type="text" id="regPhone" required placeholder="+91 XXXXX XXXXX"></div>
                 <div class="form-group">
                     <label>Upload Profile Photo</label>
                     <input type="file" id="regPhotoFile" accept="image/*" required>
@@ -104,12 +113,12 @@
     </div>
 
 <script>
-    // Embedded User's Real ImgBB API Key from previous confirmation
+    // Embedded Active User API Key
     const IMGBB_API_KEY = "0871c53c4fe16febda45c2c70f8d2b64"; 
 
     const baseProfiles = [
-        { id: 1, name: "Priya Sharma", age: 24, location: "Mumbai", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400", habits: "Non-Smoker", hobbies: "Music" },
-        { id: 2, name: "Sneha Deshmukh", age: 22, location: "Nagpur", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400", habits: "Teetotaler", hobbies: "Reading" }
+        { id: 1, name: "Priya Sharma", age: 24, location: "Mumbai", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400", phone: "+919876543210" },
+        { id: 2, name: "Sneha Deshmukh", age: 22, location: "Nagpur", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400", phone: "+919823000000" }
     ];
 
     let customProfiles = JSON.parse(localStorage.getItem('eagle_live_profiles')) || [];
@@ -143,7 +152,7 @@
                         <button class="btn-watch" onclick="watchAd(${p.id})">▶️ Watch Video Ad</button>
                     </div>
                 ` : `
-                    <div class="lock-box" style="background:#00b894; color:white;">🔓 Number: ${p.phone || "9823xxxxxx"}</div>
+                    <div class="lock-box" style="background:#00b894; color:white;">🔓 Number: ${p.phone}</div>
                 `}
             `;
             container.appendChild(card);
@@ -160,14 +169,13 @@
         
         if (!fileInput.files[0]) return alert("Please select a profile photo!");
         
-        submitBtn.innerText = "Publishing & Uploading Photo...";
+        submitBtn.innerText = "Publishing & Uploading... Please wait...";
         submitBtn.disabled = true;
 
         const formData = new FormData();
         formData.append("image", fileInput.files[0]);
 
         try {
-            // Live Link Joining with ImgBB
             const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
                 method: "POST",
                 body: formData
@@ -175,7 +183,7 @@
             const resData = await res.json();
             
             if(resData.success) {
-                const uploadedImageUrl = resData.data.url; // Image direct Link generated
+                const uploadedImageUrl = resData.data.url;
                 
                 const newProfile = {
                     id: Date.now(),
@@ -183,7 +191,7 @@
                     age: document.getElementById('regAge').value,
                     location: document.getElementById('regLocation').value,
                     phone: document.getElementById('regPhone').value,
-                    img: uploadedImageUrl // Linked to the profile card
+                    img: uploadedImageUrl
                 };
 
                 customProfiles.unshift(newProfile);
