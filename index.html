@@ -123,7 +123,7 @@
                 </div>
                 <div class="card-details">
                     <div class="card-name" id="display-name">Priya, 23</div>
-                    <div class="card-bio" id="display-bio">Love travelling, music, and deep conversations. Let's chat!</div>
+                    <div class="card-bio" id="display-bio">Looking for someone genuine. Let's explore Nagpur together!</div>
                 </div>
             </div>
         </div>
@@ -148,13 +148,13 @@
     <div id="chat-screen" class="app-screen">
         <div id="chat-messages"></div>
         <div id="chat-input-bar">
-            <input type="text" id="msg-input-field" placeholder="Type a romantic message..." autocomplete="off">
+            <input type="text" id="msg-input-field" placeholder="Type a message..." autocomplete="off">
             <button id="msg-send-btn" onclick="executeSendMessage()">Send</button>
         </div>
     </div>
 
     <script>
-        // Your Exact & Verified Firebase Connection Credentials
+        // Verified Firebase Credentials
         const firebaseConfig = {
             apiKey: "AIzaSyAhY5TEz712ntfKgWXiiq3jYjT9Gwz9ZDc",
             authDomain: "eagledating.firebaseapp.com",
@@ -166,11 +166,10 @@
             measurementId: "G-GTF0441E6Z"
         };
 
-        // Initialize App Connection
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // High-Quality Profile Feed Database (Toki/Bumble Interface Simulation)
+        // Premium Simulated Profile Feed
         const premiumProfiles = [
             { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together!", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60" },
             { name: "Neha, 22", bio: "Software developer by day, foodie by night. Match to chat.", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60" },
@@ -178,37 +177,34 @@
             { name: "Anjali, 24", bio: "Blogger & traveler. Swipe right if you are adventurous!", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=60" }
         ];
 
+        // Automatic Smart Bot Replies Array
+        const girlReplies = [
+            "Hey! Thanks for the like 😊 Aap kahan se ho?",
+            "Hi sweetie! Sacch btao, Nagpur mein achi ghumne ki jagah konsi hai?",
+            "Hello! Aapka profile kafi interesting laga mujhe 💕 Waise kya karte ho aap?",
+            "Hey dear, main toh thoda busy thi. Aap sunao, WhatsApp use karte ho?"
+        ];
+
         let profileIndex = 0;
         let activePartnerName = "";
         let localUserSessionName = "Anonymous";
+        let messageCount = 0;
         let uniqueUserChatToken = localStorage.getItem('chat_user_id') || 'User_' + Math.floor(Math.random() * 1000000);
         localStorage.setItem('chat_user_id', uniqueUserChatToken);
 
-        // Screen Navigation Logic
         function navigateTo(screenId) {
-            document.querySelectorAll('.app-screen').forEach(screen => {
-                screen.classList.remove('active-screen');
-            });
+            document.querySelectorAll('.app-screen').forEach(screen => screen.classList.remove('active-screen'));
             document.getElementById(screenId).classList.add('active-screen');
-            
-            // Adjust headers dynamically based on screens
-            if(screenId === 'discovery-screen') {
-                document.getElementById('app-main-header').innerText = "🦅 Find Your Match";
-            }
+            if(screenId === 'discovery-screen') document.getElementById('app-main-header').innerText = "🦅 Find Your Match";
         }
 
-        // Save Profile & Proceed
         function saveUserProfile() {
             const inputName = document.getElementById('user-name-input').value.trim();
-            if(inputName === "") {
-                alert("Please enter your name to find matches!");
-                return;
-            }
+            if(inputName === "") { alert("Please enter your name to find matches!"); return; }
             localUserSessionName = inputName;
             navigateTo('discovery-screen');
         }
 
-        // Swipe & Card Updates
         function showNextProfile() {
             profileIndex = (profileIndex + 1) % premiumProfiles.length;
             document.getElementById('display-photo').style.backgroundImage = `url('${premiumProfiles[profileIndex].photo}')`;
@@ -216,7 +212,6 @@
             document.getElementById('display-bio').innerText = premiumProfiles[profileIndex].bio;
         }
 
-        // Trigger Match Found Block
         function triggerMatchEvent() {
             activePartnerName = premiumProfiles[profileIndex].name.split(',')[0];
             document.getElementById('match-announcement').innerText = `You and ${activePartnerName} liked each other!`;
@@ -224,16 +219,15 @@
             document.getElementById('match-popup').style.display = 'flex';
         }
 
-        // Launch Real-Time Connected Chat Module
         function launchChatRoom() {
             document.getElementById('match-popup').style.display = 'none';
             navigateTo('chat-screen');
             document.getElementById('app-main-header').innerText = `💬 Chat with ${activePartnerName} 🟢`;
-            document.getElementById('chat-messages').innerHTML = ""; // Clear screen state
+            document.getElementById('chat-messages').innerHTML = ""; 
+            messageCount = 0; // Reset script counter
             startDatabaseStream();
         }
 
-        // Send Core Messages to Cloud Server Node
         function executeSendMessage() {
             const msgBox = document.getElementById('msg-input-field');
             const textValue = msgBox.value.trim();
@@ -246,14 +240,25 @@
                 timestamp: Date.now()
             });
             msgBox.value = '';
+
+            // Smart Bot Response Simulation Injection
+            setTimeout(() => {
+                if(messageCount < girlReplies.length) {
+                    database.ref('global_messages').push({
+                        userId: "GIRL_BOT_ID",
+                        sender: activePartnerName,
+                        text: girlReplies[messageCount],
+                        timestamp: Date.now()
+                    });
+                    messageCount++;
+                }
+            }, 2000); // 2 second ka real delay reply aane mein
         }
 
-        // Listen to Input Enter Actions
         document.getElementById('msg-input-field').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') executeSendMessage();
         });
 
-        // Sync and Render Real-time Messages Stream
         function startDatabaseStream() {
             database.ref('global_messages').off();
             database.ref('global_messages').on('child_added', (snapshot) => {
@@ -263,15 +268,17 @@
                 
                 if (data.userId === uniqueUserChatToken) {
                     bubble.classList.add('msg-bubble', 'sent');
+                    bubble.innerHTML = `<div><strong>You:</strong> ${data.text}</div>`;
                 } else {
                     bubble.classList.add('msg-bubble', 'received');
+                    bubble.innerHTML = `<div><strong>${activePartnerName}:</strong> ${data.text}</div>`;
                 }
 
                 const msgTime = new Date(data.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                bubble.innerHTML = `<div><strong>${data.userId === uniqueUserChatToken ? 'You' : activePartnerName}:</strong> ${data.text}</div><div class="msg-time">${msgTime}</div>`;
+                bubble.innerHTML += `<div class="msg-time">${msgTime}</div>`;
                 
                 container.appendChild(bubble);
-                container.scrollTop = container.scrollHeight; // Keep scrolling bottom automatically
+                container.scrollTop = container.scrollHeight; 
             });
         }
     </script>
