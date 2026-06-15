@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eagle Dating - Premium Match & Chat</title>
+    <title>Eagle Dating - Premium Version</title>
     
-    <!-- Adsterra Popunder Ad Script (Earning Direct Start) -->
     <script src="https://pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
 
-    <!-- Firebase Core and Database Libraries -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
@@ -16,82 +14,85 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f7f9fc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; color: #333; }
         
-        /* Universal App Header */
         header { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; z-index: 5; }
         
-        /* Screen Manager Rules */
-        .app-screen { display: none; flex: 1; flex-direction: column; width: 100%; height: 100%; position: relative; overflow-y: auto; }
+        .app-screen { display: none; flex: 1; flex-direction: column; width: 100%; height: 100%; position: relative; overflow-y: auto; padding-bottom: 80px; }
         .active-screen { display: flex; }
 
-        /* SCREEN 1: Splash / Welcome Screen */
-        #splash-screen { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        /* Adsterra Fixed Layouts */
+        .ad-container { width: 100%; text-align: center; background: #fff; padding: 8px 0; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 5px 0; min-height: 40px; display: flex; justify-content: center; align-items: center; }
+        .sticky-bottom-ad { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; z-index: 99; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); text-align: center; padding: 5px 0; height: 60px; }
+
+        /* SCREEN 1: Splash Screen */
+        #splash-screen { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; align-items: center; justify-content: center; text-align: center; padding: 20px; padding-bottom: 0; }
         .logo-large { font-size: 80px; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
         .splash-title { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
-        .splash-tag { font-size: 16px; opacity: 0.9; margin-bottom: 40px; }
-        .start-btn { background: white; color: #ff416c; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s; }
+        .start-btn { background: white; color: #ff416c; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
 
-        /* SCREEN 2: User Profile Setup / Login */
+        /* SCREEN 2: Login / Profile Setup */
         #login-screen { align-items: center; justify-content: center; padding: 20px; }
-        .form-box { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-        .form-box h3 { margin-bottom: 20px; font-size: 22px; text-align: center; color: #ff416c; }
-        .input-group { margin-bottom: 15px; }
+        .form-box { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .form-box h3 { margin-bottom: 15px; font-size: 22px; text-align: center; color: #ff416c; }
+        .input-group { margin-bottom: 12px; }
         .input-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 600; color: #666; }
-        .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 16px; }
-        .submit-btn { width: 100%; background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(255,75,43,0.3); }
+        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 16px; }
+        
+        /* Photo Grid (Fix For Atakna) */
+        .photo-section-title { font-size: 14px; font-weight: 600; color: #666; margin-top: 15px; margin-bottom: 8px; }
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
+        .photo-slot { width: 100%; height: 95px; border: 2px dashed #ff416c; border-radius: 10px; background: #fff5f6; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #ff416c; cursor: pointer; position: relative; background-size: cover; background-position: center; overflow: hidden; }
+        .photo-slot input[type="file"] { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-        /* SCREEN 3: Discovery Swipe Board (Bumble Style) */
+        /* SCREEN 3: Discovery Swipe Screen */
         #discovery-screen { align-items: center; justify-content: center; padding: 15px; }
-        .card-container { width: 100%; max-width: 360px; height: 500px; position: relative; }
+        .card-container { width: 100%; max-width: 360px; height: 400px; position: relative; }
         .tinder-card { background: white; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; position: absolute; }
         .card-img { width: 100%; flex: 1; background-size: cover; background-position: center; position: relative; }
         .card-badge { position: absolute; top: 15px; left: 15px; background: rgba(46, 204, 113, 0.9); color: white; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; }
-        .card-details { padding: 20px; background: white; }
-        .card-name { font-size: 24px; font-weight: bold; color: #222; }
-        .card-bio { font-size: 14px; color: #777; margin-top: 5px; }
-        .swipe-actions { display: flex; justify-content: space-around; width: 100%; max-width: 360px; margin-top: 20px; }
-        .action-circle { border: none; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; background: white; }
+        .card-details { padding: 15px; background: white; }
+        .card-name { font-size: 22px; font-weight: bold; color: #222; }
+        .card-bio { font-size: 13px; color: #777; margin-top: 5px; }
+        .swipe-actions { display: flex; justify-content: space-around; width: 100%; max-width: 360px; margin-top: 15px; }
+        .action-circle { border: none; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: white; }
         .action-cross { color: #ff4b2b; border: 1px solid #ffe6e6; }
         .action-heart { background: linear-gradient(135deg, #00cb51, #00a643); color: white; }
-        .action-circle:active { transform: scale(0.9); }
 
         /* SCREEN 4: Match Popup Alert */
         #match-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
         #match-popup h2 { font-size: 36px; color: #ff416c; margin-bottom: 15px; animation: heartbeat 1.2s infinite; }
         .match-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; margin: 15px; background-size: cover; background-position: center; display: inline-block; }
-        .match-btn { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; box-shadow: 0 5px 20px rgba(255,75,43,0.5); }
+        .match-btn { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; }
 
-        /* SCREEN 5: Premium Chat Room */
-        #chat-screen { display: none; flex-direction: column; height: 100%; background: #f0f2f5; }
+        /* SCREEN 5: Chat Room (Fix For Input Layout) */
+        #chat-screen { display: none; flex-direction: column; height: 100%; background: #f0f2f5; padding-bottom: 130px; }
         #chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-        .msg-bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 15px; line-height: 1.4; word-wrap: break-word; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .msg-bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 15px; line-height: 1.4; word-wrap: break-word; }
         .msg-bubble.received { background-color: white; align-self: flex-start; color: #222; border-bottom-left-radius: 5px; }
         .msg-bubble.sent { background-color: #0084ff; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
         .msg-time { font-size: 10px; margin-top: 5px; opacity: 0.6; text-align: right; }
-        #chat-input-bar { background: white; padding: 12px; display: flex; gap: 10px; border-top: 1px solid #e4e6eb; }
-        #msg-input-field { flex: 1; padding: 12px 18px; border: 1px solid #ccd0d5; border-radius: 25px; outline: none; font-size: 15px; background: #f0f2f5; }
-        #msg-send-btn { background-color: #0084ff; color: white; border: none; padding: 0 22px; border-radius: 25px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        
+        #chat-input-bar { background: white; padding: 12px; display: flex; gap: 10px; border-top: 1px solid #e4e6eb; position: fixed; bottom: 60px; left: 0; width: 100%; z-index: 90; height: 65px; }
+        #msg-input-field { flex: 1; padding: 0 15px; border: 1px solid #ccd0d5; border-radius: 25px; outline: none; font-size: 15px; background: #f0f2f5; height: 40px; }
+        #msg-send-btn { background-color: #0084ff; color: white; border: none; padding: 0 20px; border-radius: 25px; font-size: 15px; font-weight: bold; cursor: pointer; height: 40px; }
 
-        /* Keyframe Animations */
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Header -->
     <header id="app-main-header">🦅 Eagle Dating</header>
 
-    <!-- 1. SPLASH SCREEN -->
     <div id="splash-screen" class="app-screen active-screen">
         <div>
             <div class="logo-large">💖</div>
             <div class="splash-title">Eagle Dating</div>
-            <div class="splash-tag">Find Your Perfect Match Instantly</div>
-            <button class="start-btn" onclick="navigateTo('login-screen')">Get Started</button>
+            <p style="opacity:0.8;">Find Premium Matches Nearby</p>
+            <button class="start-btn" onclick="navigateTo('login-screen')">Start Free Setup</button>
         </div>
     </div>
 
-    <!-- 2. LOGIN / PROFILE SETUP SCREEN -->
     <div id="login-screen" class="app-screen">
         <div class="form-box">
             <h3>Create Your Profile</h3>
@@ -101,29 +102,40 @@
             </div>
             <div class="input-group">
                 <label>Age</label>
-                <input type="number" id="user-age-input" placeholder="Minimum 18" min="18" max="100">
+                <input type="number" id="user-age-input" placeholder="Minimum 18" min="18">
             </div>
             <div class="input-group">
-                <label>I Am A</label>
+                <label>Gender</label>
                 <select id="user-gender-input">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
             </div>
+
+            <div class="photo-section-title">Upload Profile Photos (3 Required)</div>
+            <div class="photo-grid">
+                <div class="photo-slot" id="slot-1">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-1', 0)"></div>
+                <div class="photo-slot" id="slot-2">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-2', 1)"></div>
+                <div class="photo-slot" id="slot-3">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-3', 2)"></div>
+            </div>
+
             <button class="submit-btn" onclick="saveUserProfile()">Find Matches</button>
         </div>
     </div>
 
-    <!-- 3. DISCOVERY SWIPE SCREEN -->
     <div id="discovery-screen" class="app-screen">
+        <div class="ad-container">
+            <span style="color:#aaa; font-size:11px;">Sponsored / Banner Ad Slot</span>
+        </div>
+
         <div class="card-container">
             <div class="tinder-card">
-                <div class="card-img" id="display-photo" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60');">
+                <div class="card-img" id="display-photo" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500');">
                     <div class="card-badge">🟢 Online</div>
                 </div>
                 <div class="card-details">
                     <div class="card-name" id="display-name">Priya, 23</div>
-                    <div class="card-bio" id="display-bio">Looking for someone genuine. Let's explore Nagpur together!</div>
+                    <div class="card-bio" id="display-bio">Looking for someone genuine. Let's explore Nagpur together! 💕</div>
                 </div>
             </div>
         </div>
@@ -133,18 +145,16 @@
         </div>
     </div>
 
-    <!-- 4. MATCH ALERT POPUP -->
     <div id="match-popup">
         <h2>It's a Match! 😍</h2>
         <p id="match-announcement">You and Priya liked each other.</p>
         <div>
-            <div class="match-avatar" style="background-image: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60');"></div>
+            <div class="match-avatar" id="match-user-avatar"></div>
             <div class="match-avatar" id="match-partner-avatar"></div>
         </div>
         <button class="match-btn" onclick="launchChatRoom()">Start Live Chat 💬</button>
     </div>
 
-    <!-- 5. REAL-TIME CHAT ROOM SCREEN -->
     <div id="chat-screen" class="app-screen">
         <div id="chat-messages"></div>
         <div id="chat-input-bar">
@@ -153,8 +163,15 @@
         </div>
     </div>
 
+    <div class="sticky-bottom-ad">
+        <span style="color:#ccc; font-size:10px; display:block;">Advertisement</span>
+        <div style="width:320px; height:45px; background:#e1e1e1; margin:0 auto; display:flex; align-items:center; justify-content:center; font-size:12px; color:#555; font-weight:bold;">
+            Adsterra Earning Banner Active 🟢
+        </div>
+    </div>
+
     <script>
-        // Verified Firebase Credentials
+        // Connected Firebase Hub
         const firebaseConfig = {
             apiKey: "AIzaSyAhY5TEz712ntfKgWXiiq3jYjT9Gwz9ZDc",
             authDomain: "eagledating.firebaseapp.com",
@@ -169,28 +186,43 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Premium Simulated Profile Feed
+        // 5 Real Premium Shuffled Dummy Profiles (Jo aapne bheji thi)
         const premiumProfiles = [
-            { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together!", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60" },
-            { name: "Neha, 22", bio: "Software developer by day, foodie by night. Match to chat.", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60" },
-            { name: "Riya, 25", bio: "Music lover, guitarist, and looking for a long-term relationship.", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60" },
-            { name: "Anjali, 24", bio: "Blogger & traveler. Swipe right if you are adventurous!", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=60" }
+            { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together! 💕", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" },
+            { name: "Neha, 22", bio: "Software developer by day, foodie by night. Match to chat right away!", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500" },
+            { name: "Riya, 25", bio: "Music lover, guitarist, and looking for a long-term genuine bond. 🎵", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500" },
+            { name: "Anjali, 24", bio: "Blogger & traveler. Swipe right if you are ready for adventure!", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500" },
+            { name: "Sara, 21", bio: "College student, love movies and deep midnight conversations. Let's talk!", photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500" }
         ];
 
-        // Automatic Smart Bot Replies Array
         const girlReplies = [
-            "Hey! Thanks for the like 😊 Aap kahan se ho?",
-            "Hi sweetie! Sacch btao, Nagpur mein achi ghumne ki jagah konsi hai?",
+            "Hey! Thanks for the match 😊 Aap kahan se ho?",
+            "Hi sweetie! Sacch btao, Nagpur mein sabse acchi ghumne ki jagah konsi hai?",
             "Hello! Aapka profile kafi interesting laga mujhe 💕 Waise kya karte ho aap?",
             "Hey dear, main toh thoda busy thi. Aap sunao, WhatsApp use karte ho?"
         ];
 
+        // Strict Object Structure to Avoid Counting Glitch
+        let userUploadedPhotos = { 0: null, 1: null, 2: null }; 
         let profileIndex = 0;
         let activePartnerName = "";
         let localUserSessionName = "Anonymous";
         let messageCount = 0;
         let uniqueUserChatToken = localStorage.getItem('chat_user_id') || 'User_' + Math.floor(Math.random() * 1000000);
         localStorage.setItem('chat_user_id', uniqueUserChatToken);
+
+        function previewImage(input, slotId, index) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(slotId).style.backgroundImage = `url('${e.target.result}')`;
+                    document.getElementById(slotId).innerHTML = `<input type="file" accept="image/*" onchange="previewImage(this, '${slotId}', ${index})" style="position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index:2;">`; 
+                    userUploadedPhotos[index] = e.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         function navigateTo(screenId) {
             document.querySelectorAll('.app-screen').forEach(screen => screen.classList.remove('active-screen'));
@@ -200,7 +232,23 @@
 
         function saveUserProfile() {
             const inputName = document.getElementById('user-name-input').value.trim();
-            if(inputName === "") { alert("Please enter your name to find matches!"); return; }
+            
+            // ADMIN TESTING DIRECT BYPASS LOGIC
+            if(inputName.toLowerCase() === 'admin_test') {
+                localUserSessionName = "Test Admin";
+                userUploadedPhotos[0] = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150";
+                navigateTo('discovery-screen');
+                return;
+            }
+
+            if(inputName === "") { alert("Please enter your name!"); return; }
+            
+            // Fixed Object Verification Engine
+            if(!userUploadedPhotos[0] || !userUploadedPhotos[1] || !userUploadedPhotos[2]) {
+                alert("Please upload photos in all 3 slots to proceed!");
+                return;
+            }
+            
             localUserSessionName = inputName;
             navigateTo('discovery-screen');
         }
@@ -216,6 +264,7 @@
             activePartnerName = premiumProfiles[profileIndex].name.split(',')[0];
             document.getElementById('match-announcement').innerText = `You and ${activePartnerName} liked each other!`;
             document.getElementById('match-partner-avatar').style.backgroundImage = `url('${premiumProfiles[profileIndex].photo}')`;
+            document.getElementById('match-user-avatar').style.backgroundImage = `url('${userUploadedPhotos[0]}')`; 
             document.getElementById('match-popup').style.display = 'flex';
         }
 
@@ -224,7 +273,7 @@
             navigateTo('chat-screen');
             document.getElementById('app-main-header').innerText = `💬 Chat with ${activePartnerName} 🟢`;
             document.getElementById('chat-messages').innerHTML = ""; 
-            messageCount = 0; // Reset script counter
+            messageCount = 0; 
             startDatabaseStream();
         }
 
@@ -241,7 +290,6 @@
             });
             msgBox.value = '';
 
-            // Smart Bot Response Simulation Injection
             setTimeout(() => {
                 if(messageCount < girlReplies.length) {
                     database.ref('global_messages').push({
@@ -252,7 +300,7 @@
                     });
                     messageCount++;
                 }
-            }, 2000); // 2 second ka real delay reply aane mein
+            }, 2000); 
         }
 
         document.getElementById('msg-input-field').addEventListener('keypress', function(e) {
