@@ -3,43 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eagle Dating - Live Chat</title>
+    <title>Eagle Dating - Premium Match & Chat</title>
     
-    <!-- Adsterra Popunder Ad Script (Earning ke liye) -->
+    <!-- Adsterra Popunder Ad Script (Earning Direct Start) -->
     <script src="https://pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
 
-    <!-- Firebase App aur Database Compat Libraries -->
+    <!-- Firebase Core and Database Libraries -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #f0f2f5; display: flex; flex-direction: column; height: 100vh; }
-        header { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        #chat-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .message { max-width: 75%; padding: 10px 15px; border-radius: 20px; font-size: 16px; line-height: 1.4; word-wrap: break-word; }
-        .message.incoming { background-color: white; align-self: flex-start; color: #333; border-bottom-left-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .message.outgoing { background-color: #0084ff; color: white; align-self: flex-end; border-bottom-right-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .meta-info { font-size: 11px; margin-top: 4px; opacity: 0.7; text-align: right; }
-        #input-container { background: white; padding: 10px; display: flex; gap: 10px; border-top: 1px solid #ddd; position: sticky; bottom: 0; }
-        #message-input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 25px; outline: none; font-size: 16px; }
-        #send-btn { background-color: #0084ff; color: white; border: none; padding: 0 20px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        #send-btn:active { background-color: #0066cc; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f7f9fc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; color: #333; }
+        
+        /* Universal App Header */
+        header { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; z-index: 5; }
+        
+        /* Screen Manager Rules */
+        .app-screen { display: none; flex: 1; flex-direction: column; width: 100%; height: 100%; position: relative; overflow-y: auto; }
+        .active-screen { display: flex; }
+
+        /* SCREEN 1: Splash / Welcome Screen */
+        #splash-screen { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .logo-large { font-size: 80px; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
+        .splash-title { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
+        .splash-tag { font-size: 16px; opacity: 0.9; margin-bottom: 40px; }
+        .start-btn { background: white; color: #ff416c; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s; }
+
+        /* SCREEN 2: User Profile Setup / Login */
+        #login-screen { align-items: center; justify-content: center; padding: 20px; }
+        .form-box { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+        .form-box h3 { margin-bottom: 20px; font-size: 22px; text-align: center; color: #ff416c; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 600; color: #666; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 16px; }
+        .submit-btn { width: 100%; background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(255,75,43,0.3); }
+
+        /* SCREEN 3: Discovery Swipe Board (Bumble Style) */
+        #discovery-screen { align-items: center; justify-content: center; padding: 15px; }
+        .card-container { width: 100%; max-width: 360px; height: 500px; position: relative; }
+        .tinder-card { background: white; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; position: absolute; }
+        .card-img { width: 100%; flex: 1; background-size: cover; background-position: center; position: relative; }
+        .card-badge { position: absolute; top: 15px; left: 15px; background: rgba(46, 204, 113, 0.9); color: white; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: bold; }
+        .card-details { padding: 20px; background: white; }
+        .card-name { font-size: 24px; font-weight: bold; color: #222; }
+        .card-bio { font-size: 14px; color: #777; margin-top: 5px; }
+        .swipe-actions { display: flex; justify-content: space-around; width: 100%; max-width: 360px; margin-top: 20px; }
+        .action-circle { border: none; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s; background: white; }
+        .action-cross { color: #ff4b2b; border: 1px solid #ffe6e6; }
+        .action-heart { background: linear-gradient(135deg, #00cb51, #00a643); color: white; }
+        .action-circle:active { transform: scale(0.9); }
+
+        /* SCREEN 4: Match Popup Alert */
+        #match-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
+        #match-popup h2 { font-size: 36px; color: #ff416c; margin-bottom: 15px; animation: heartbeat 1.2s infinite; }
+        .match-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; margin: 15px; background-size: cover; background-position: center; display: inline-block; }
+        .match-btn { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; box-shadow: 0 5px 20px rgba(255,75,43,0.5); }
+
+        /* SCREEN 5: Premium Chat Room */
+        #chat-screen { display: none; flex-direction: column; height: 100%; background: #f0f2f5; }
+        #chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+        .msg-bubble { max-width: 75%; padding: 12px 16px; border-radius: 20px; font-size: 15px; line-height: 1.4; word-wrap: break-word; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .msg-bubble.received { background-color: white; align-self: flex-start; color: #222; border-bottom-left-radius: 5px; }
+        .msg-bubble.sent { background-color: #0084ff; color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .msg-time { font-size: 10px; margin-top: 5px; opacity: 0.6; text-align: right; }
+        #chat-input-bar { background: white; padding: 12px; display: flex; gap: 10px; border-top: 1px solid #e4e6eb; }
+        #msg-input-field { flex: 1; padding: 12px 18px; border: 1px solid #ccd0d5; border-radius: 25px; outline: none; font-size: 15px; background: #f0f2f5; }
+        #msg-send-btn { background-color: #0084ff; color: white; border: none; padding: 0 22px; border-radius: 25px; font-size: 15px; font-weight: bold; cursor: pointer; }
+
+        /* Keyframe Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
     </style>
 </head>
 <body>
 
-    <header>🦅 Eagle Dating Live Chat 🦅</header>
-    
-    <div id="chat-container"></div>
+    <!-- Dynamic Header -->
+    <header id="app-main-header">🦅 Eagle Dating</header>
 
-    <div id="input-container">
-        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
-        <button id="send-btn">Send</button>
+    <!-- 1. SPLASH SCREEN -->
+    <div id="splash-screen" class="app-screen active-screen">
+        <div>
+            <div class="logo-large">💖</div>
+            <div class="splash-title">Eagle Dating</div>
+            <div class="splash-tag">Find Your Perfect Match Instantly</div>
+            <button class="start-btn" onclick="navigateTo('login-screen')">Get Started</button>
+        </div>
+    </div>
+
+    <!-- 2. LOGIN / PROFILE SETUP SCREEN -->
+    <div id="login-screen" class="app-screen">
+        <div class="form-box">
+            <h3>Create Your Profile</h3>
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" id="user-name-input" placeholder="Enter your full name">
+            </div>
+            <div class="input-group">
+                <label>Age</label>
+                <input type="number" id="user-age-input" placeholder="Minimum 18" min="18" max="100">
+            </div>
+            <div class="input-group">
+                <label>I Am A</label>
+                <select id="user-gender-input">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <button class="submit-btn" onclick="saveUserProfile()">Find Matches</button>
+        </div>
+    </div>
+
+    <!-- 3. DISCOVERY SWIPE SCREEN -->
+    <div id="discovery-screen" class="app-screen">
+        <div class="card-container">
+            <div class="tinder-card">
+                <div class="card-img" id="display-photo" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60');">
+                    <div class="card-badge">🟢 Online</div>
+                </div>
+                <div class="card-details">
+                    <div class="card-name" id="display-name">Priya, 23</div>
+                    <div class="card-bio" id="display-bio">Love travelling, music, and deep conversations. Let's chat!</div>
+                </div>
+            </div>
+        </div>
+        <div class="swipe-actions">
+            <button class="action-circle action-cross" onclick="showNextProfile()">✖</button>
+            <button class="action-circle action-heart" onclick="triggerMatchEvent()">❤</button>
+        </div>
+    </div>
+
+    <!-- 4. MATCH ALERT POPUP -->
+    <div id="match-popup">
+        <h2>It's a Match! 😍</h2>
+        <p id="match-announcement">You and Priya liked each other.</p>
+        <div>
+            <div class="match-avatar" style="background-image: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=60');"></div>
+            <div class="match-avatar" id="match-partner-avatar"></div>
+        </div>
+        <button class="match-btn" onclick="launchChatRoom()">Start Live Chat 💬</button>
+    </div>
+
+    <!-- 5. REAL-TIME CHAT ROOM SCREEN -->
+    <div id="chat-screen" class="app-screen">
+        <div id="chat-messages"></div>
+        <div id="chat-input-bar">
+            <input type="text" id="msg-input-field" placeholder="Type a romantic message..." autocomplete="off">
+            <button id="msg-send-btn" onclick="executeSendMessage()">Send</button>
+        </div>
     </div>
 
     <script>
-        // Aapka Ekdum Sahi Aur Poora Firebase Configuration
+        // Your Exact & Verified Firebase Connection Credentials
         const firebaseConfig = {
             apiKey: "AIzaSyAhY5TEz712ntfKgWXiiq3jYjT9Gwz9ZDc",
             authDomain: "eagledating.firebaseapp.com",
@@ -51,60 +166,114 @@
             measurementId: "G-GTF0441E6Z"
         };
 
-        // Firebase ko Initialize karna
+        // Initialize App Connection
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Users ko alag-alag pehchanne ke liye local session ID
-        let userId = localStorage.getItem('chat_user_id');
-        if (!userId) {
-            userId = 'User_' + Math.floor(Math.random() * 1000000);
-            localStorage.setItem('chat_user_id', userId);
+        // High-Quality Profile Feed Database (Toki/Bumble Interface Simulation)
+        const premiumProfiles = [
+            { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together!", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60" },
+            { name: "Neha, 22", bio: "Software developer by day, foodie by night. Match to chat.", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60" },
+            { name: "Riya, 25", bio: "Music lover, guitarist, and looking for a long-term relationship.", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60" },
+            { name: "Anjali, 24", bio: "Blogger & traveler. Swipe right if you are adventurous!", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&auto=format&fit=crop&q=60" }
+        ];
+
+        let profileIndex = 0;
+        let activePartnerName = "";
+        let localUserSessionName = "Anonymous";
+        let uniqueUserChatToken = localStorage.getItem('chat_user_id') || 'User_' + Math.floor(Math.random() * 1000000);
+        localStorage.setItem('chat_user_id', uniqueUserChatToken);
+
+        // Screen Navigation Logic
+        function navigateTo(screenId) {
+            document.querySelectorAll('.app-screen').forEach(screen => {
+                screen.classList.remove('active-screen');
+            });
+            document.getElementById(screenId).classList.add('active-screen');
+            
+            // Adjust headers dynamically based on screens
+            if(screenId === 'discovery-screen') {
+                document.getElementById('app-main-header').innerText = "🦅 Find Your Match";
+            }
         }
 
-        const chatContainer = document.getElementById('chat-container');
-        const messageInput = document.getElementById('message-input');
-        const sendBtn = document.getElementById('send-btn');
+        // Save Profile & Proceed
+        function saveUserProfile() {
+            const inputName = document.getElementById('user-name-input').value.trim();
+            if(inputName === "") {
+                alert("Please enter your name to find matches!");
+                return;
+            }
+            localUserSessionName = inputName;
+            navigateTo('discovery-screen');
+        }
 
-        // Message Send karne ka logical function
-        function sendMessage() {
-            const text = messageInput.value.trim();
-            if (text === '') return;
+        // Swipe & Card Updates
+        function showNextProfile() {
+            profileIndex = (profileIndex + 1) % premiumProfiles.length;
+            document.getElementById('display-photo').style.backgroundImage = `url('${premiumProfiles[profileIndex].photo}')`;
+            document.getElementById('display-name').innerText = premiumProfiles[profileIndex].name;
+            document.getElementById('display-bio').innerText = premiumProfiles[profileIndex].bio;
+        }
 
-            // Database ke 'global_messages' node mein data push karna
+        // Trigger Match Found Block
+        function triggerMatchEvent() {
+            activePartnerName = premiumProfiles[profileIndex].name.split(',')[0];
+            document.getElementById('match-announcement').innerText = `You and ${activePartnerName} liked each other!`;
+            document.getElementById('match-partner-avatar').style.backgroundImage = `url('${premiumProfiles[profileIndex].photo}')`;
+            document.getElementById('match-popup').style.display = 'flex';
+        }
+
+        // Launch Real-Time Connected Chat Module
+        function launchChatRoom() {
+            document.getElementById('match-popup').style.display = 'none';
+            navigateTo('chat-screen');
+            document.getElementById('app-main-header').innerText = `💬 Chat with ${activePartnerName} 🟢`;
+            document.getElementById('chat-messages').innerHTML = ""; // Clear screen state
+            startDatabaseStream();
+        }
+
+        // Send Core Messages to Cloud Server Node
+        function executeSendMessage() {
+            const msgBox = document.getElementById('msg-input-field');
+            const textValue = msgBox.value.trim();
+            if (textValue === '') return;
+
             database.ref('global_messages').push({
-                userId: userId,
-                text: text,
+                userId: uniqueUserChatToken,
+                sender: localUserSessionName,
+                text: textValue,
                 timestamp: Date.now()
             });
-
-            messageInput.value = '';
+            msgBox.value = '';
         }
 
-        sendBtn.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') sendMessage();
+        // Listen to Input Enter Actions
+        document.getElementById('msg-input-field').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') executeSendMessage();
         });
 
-        // Database se real-time messages screen par dikhana
-        database.ref('global_messages').on('child_added', (snapshot) => {
-            const data = snapshot.val();
-            const messageEl = document.createElement('div');
-            
-            // Outgoing aur Incoming message styles manage karna
-            if (data.userId === userId) {
-                messageEl.classList.add('message', 'outgoing');
-            } else {
-                messageEl.classList.add('message', 'incoming');
-            }
+        // Sync and Render Real-time Messages Stream
+        function startDatabaseStream() {
+            database.ref('global_messages').off();
+            database.ref('global_messages').on('child_added', (snapshot) => {
+                const data = snapshot.val();
+                const container = document.getElementById('chat-messages');
+                const bubble = document.createElement('div');
+                
+                if (data.userId === uniqueUserChatToken) {
+                    bubble.classList.add('msg-bubble', 'sent');
+                } else {
+                    bubble.classList.add('msg-bubble', 'received');
+                }
 
-            const time = new Date(data.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            messageEl.innerHTML = `<div>${data.text}</div><div class="meta-info">${time}</div>`;
-            
-            chatContainer.appendChild(messageEl);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        });
+                const msgTime = new Date(data.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                bubble.innerHTML = `<div><strong>${data.userId === uniqueUserChatToken ? 'You' : activePartnerName}:</strong> ${data.text}</div><div class="msg-time">${msgTime}</div>`;
+                
+                container.appendChild(bubble);
+                container.scrollTop = container.scrollHeight; // Keep scrolling bottom automatically
+            });
+        }
     </script>
-
 </body>
 </html>
