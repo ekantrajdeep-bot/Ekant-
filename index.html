@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eagle Dating - Final Checked Version</title>
+    <title>Eagle Dating - Pre-Monetized Fixed Version</title>
+    <!-- Firebase Libraries -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     
+    <!-- Adsterra Monetization Engine - Head Section Ads -->
+    <!-- These handle Popunder and Social Bar Ads immediately -->
     <script type="text/javascript" src="//pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
-
     <script type='text/javascript' src='//pl29751433.highperformanceformat.com/5a/08/0c/5a080c5877c44db1ea0c0bc1bc19eeb6.js'></script>
 
     <style>
-        /* Exact layout design matching screenshot 1000168067.jpg */
+        /* Matches screenshot 1000168067.jpg styling */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: #f7f9fc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Top Gradient Header */
         header { 
             background: linear-gradient(to right, #ff3b30, #ff2d55); 
             color: white; 
@@ -31,11 +32,10 @@
         }
         header span { margin-left: 8px; }
 
-        /* Screens Visibility Router */
         .app-screen { display: none; flex: 1; flex-direction: column; width: 100%; height: 100%; overflow: hidden; }
         .active-screen { display: flex; }
 
-        /* SCREEN 1: Profile Setup Section */
+        /* Profile Setup Screen */
         #login-screen { align-items: center; justify-content: center; padding: 20px; overflow-y: auto; background-color: #f0f2f5; }
         .form-box { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .form-box h3 { margin-bottom: 15px; font-size: 22px; text-align: center; color: #ff2d55; }
@@ -43,14 +43,13 @@
         .input-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 600; color: #666; }
         .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 16px; }
         
-        /* 3 Photo Slots Elements */
         .photo-section-title { font-size: 14px; font-weight: 600; color: #666; margin-top: 15px; margin-bottom: 8px; }
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
         .photo-slot { width: 100%; height: 95px; border: 2px dashed #ff2d55; border-radius: 10px; background: #fff5f6; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #ff2d55; cursor: pointer; position: relative; background-size: cover; background-position: center; overflow: hidden; }
         .photo-slot input[type="file"] { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
         .submit-btn { width: 100%; background: linear-gradient(to right, #ff3b30, #ff2d55); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-        /* SCREEN 2: Discovery Swipe Setup */
+        /* Swipe Screen */
         #discovery-screen { align-items: center; justify-content: space-between; padding: 15px; background: #f7f9fc; }
         .card-container { width: 100%; max-width: 360px; flex: 1; display: flex; align-items: center; justify-content: center; margin: 10px 0; }
         .tinder-card { background: white; width: 100%; height: 380px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; }
@@ -61,46 +60,31 @@
         .card-bio { font-size: 13px; color: #777; margin-top: 5px; }
         .swipe-actions { display: flex; justify-content: space-around; width: 100%; max-width: 360px; margin-bottom: 10px; }
 
-        /* SCREEN 3: Full-Screen Match Popup */
+        /* Match Popup */
         #match-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
         #match-popup h2 { font-size: 36px; color: #ff2d55; margin-bottom: 15px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .match-avatar-box { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
         .match-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; background-size: cover; background-position: center; box-shadow: 0 0 15px rgba(255,45,85,0.6); }
         .match-btn { background: linear-gradient(to right, #ff3b30, #ff2d55); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(255,45,85,0.4); }
 
-        /* SCREEN 4: Match Chat Flow Screen */
-        #chat-screen { background-color: #efeae2; }
+        /* Chat Screen */
         #chat-messages { flex: 1; overflow-y: auto; padding: 20px 15px; display: flex; flex-direction: column; gap: 12px; }
-        
-        /* Message Bubbles Exact Design styling */
         .msg-bubble { max-width: 75%; padding: 12px 16px; font-size: 16px; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         .msg-bubble.received { background-color: #ffffff; color: #000000; align-self: flex-start; border-radius: 0px 15px 15px 15px; }
         .msg-bubble.sent { background-color: #d9fdd3; color: #000000; align-self: flex-end; border-radius: 15px 0px 15px 15px; }
 
-        /* Input Block Footer Layout */
         .chat-input-container { background: #f0f0f0; padding: 10px; display: flex; gap: 10px; align-items: center; border-top: 1px solid #e0e0e0; flex-shrink: 0; }
         #msg-input-field { flex: 1; padding: 12px 18px; border: 1px solid #ffffff; border-radius: 25px; outline: none; font-size: 16px; background: white; }
         #msg-send-btn { background-color: #00a884; color: white; border: none; padding: 0 22px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; height: 45px; }
 
-        /* Bottom Fixed Banner Wrapper */
-        .global-ad-slot { 
-            width: 100%; 
-            background: #ffffff; 
-            border-top: 1px solid #d0d0d0; 
-            padding: 8px 0; 
-            text-align: center; 
-            min-height: 66px; 
-            flex-shrink: 0; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .global-ad-slot { width: 100%; background: #f9f9f9; border-top: 1px solid #d0d0d0; padding: 8px 0; text-align: center; min-height: 66px; flex-shrink: 0; }
     </style>
 </head>
 <body>
 
     <header id="main-app-header">🦅 <span>Eagle Dating</span></header>
 
+    <!-- MODULE 1: SETUP -->
     <div id="login-screen" class="app-screen active-screen">
         <div class="form-box">
             <h3>Create Profile</h3>
@@ -131,6 +115,7 @@
         </div>
     </div>
 
+    <!-- MODULE 2: TINDER CARDS -->
     <div id="discovery-screen" class="app-screen">
         <div class="card-container">
             <div class="tinder-card">
@@ -149,6 +134,7 @@
         </div>
     </div>
 
+    <!-- MODULE 3: IT'S A MATCH POPUP -->
     <div id="match-popup">
         <h2>It's a Match! 😍</h2>
         <p id="match-announcement">You and Sara liked each other.</p>
@@ -159,6 +145,7 @@
         <button class="match-btn" onclick="launchChatRoom()">Start Live Chat 💬</button>
     </div>
 
+    <!-- MODULE 4: EXACT CONVERSATION LOG ROOM -->
     <div id="chat-screen" class="app-screen">
         <div id="chat-messages">
             <div class="msg-bubble sent">You: Hi</div>
@@ -176,23 +163,25 @@
         </div>
 
         <div class="global-ad-slot" id="banner-ad-container">
+            <!-- 
+              FIXED Adsterra Banner (320x50) Integration 
+              All script tags are correctly nested with verified options.
+            -->
             <script type="text/javascript">
                 atOptions = {
-                    'key' : '<script src="https://pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
- ', // Verified Banner Key Placement
+                    'key' : '9ea0ea1d4a0a4cdd88d74bf080447040',
                     'format' : 'iframe',
                     'height' : 50,
                     'width' : 320,
                     'params' : {}
                 };
             </script>
-            <script type="text/javascript" src="//www.highperformanceformat.com/<script src="https://pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
- /invoke.js"></script>
+            <script type="text/javascript" src="//pl29751221.effectivecpmnetwork.com/9ea0ea1d4a0a4cdd88d74bf080447040/invoke.js"></script>
         </div>
     </div>
 
     <script>
-        // Exact Firebase Database Engine Setup
+        // Exact Firebase Database Engine Setup as in image_6.png
         const firebaseConfig = {
             apiKey: "AIzaSyAhY5TEz712ntfKgWXiiq3jYjT9Gwz9ZDc",
             authDomain: "eagledating.firebaseapp.com",
@@ -216,7 +205,6 @@
         let activePartnerName = "Sara";
         let currentClientName = "You";
 
-        // Photo slot upload handlers
         function previewSlotImage(input, slotId, idx) {
             const file = input.files[0];
             if (file) {
@@ -230,7 +218,6 @@
             }
         }
 
-        // Section View Router Logic
         function switchViewTo(targetId) {
             document.querySelectorAll('.app-screen').forEach(scr => scr.style.display = 'none');
             document.getElementById(targetId).style.display = 'flex';
