@@ -224,9 +224,41 @@
         }
 
         function processProfileValidation() {
-            const enteredName = document.getElementById('user-name-input').value.trim();
-            if(enteredName !== "") { currentClientName = enteredName; }
-            switchViewTo('discovery-screen');
+    const enteredName = document.getElementById('user-name-input').value.trim();
+    const enteredAge = document.getElementById('user-age-input').value.trim();
+    const enteredGender = document.getElementById('user-gender-input').value;
+
+    if(enteredName === "" || enteredAge === "") {
+        alert("Please enter your name and age!");
+        return;
+    }
+
+    currentClientName = enteredName;
+
+    const profileRef = databaseEngine.ref('user_profiles').push();
+    profileRef.set({
+        name: enteredName,
+        age: enteredAge,
+        gender: enteredGender,
+        timestamp: Date.now()
+    });
+
+    localStorage.setItem('eagle_user_name', enteredName);
+    localStorage.setItem('eagle_user_logged_in', 'true');
+
+    switchViewTo('discovery-screen');
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    const isLoggedIn = localStorage.getItem('eagle_user_logged_in');
+    const savedName = localStorage.getItem('eagle_user_name');
+
+    if (isLoggedIn === 'true' && savedName) {
+        currentClientName = savedName;
+        switchViewTo('discovery-screen');
+    }
+});
+
         }
 
         function showNextProfile() {
