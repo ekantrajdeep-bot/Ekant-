@@ -3,38 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eagle Dating - Final Verified Version</title>
-    
+    <title>Eagle Dating - Final Checked Version</title>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
+    <script type="text/javascript" src="//pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js"></script>
+
+    <script type='text/javascript' src='//pl29751433.highperformanceformat.com/5a/08/0c/5a080c5877c44db1ea0c0bc1bc19eeb6.js'></script>
 
     <style>
+        /* Exact layout design matching screenshot 1000168067.jpg */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: #f7f9fc; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        header { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; padding: 15px; text-align: center; font-size: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex-shrink: 0; }
-        
-        /* App Screens Router Layout */
+        /* Top Gradient Header */
+        header { 
+            background: linear-gradient(to right, #ff3b30, #ff2d55); 
+            color: white; 
+            padding: 15px; 
+            font-size: 20px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        header span { margin-left: 8px; }
+
+        /* Screens Visibility Router */
         .app-screen { display: none; flex: 1; flex-direction: column; width: 100%; height: 100%; overflow: hidden; }
         .active-screen { display: flex; }
 
-        /* Login Screen Setup */
-        #login-screen { align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-        .form-box { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-        .form-box h3 { margin-bottom: 15px; font-size: 22px; text-align: center; color: #ff416c; }
+        /* SCREEN 1: Profile Setup Section */
+        #login-screen { align-items: center; justify-content: center; padding: 20px; overflow-y: auto; background-color: #f0f2f5; }
+        .form-box { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .form-box h3 { margin-bottom: 15px; font-size: 22px; text-align: center; color: #ff2d55; }
         .input-group { margin-bottom: 12px; }
         .input-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 600; color: #666; }
         .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 16px; }
         
-        /* 3 Photo Slots System */
+        /* 3 Photo Slots Elements */
         .photo-section-title { font-size: 14px; font-weight: 600; color: #666; margin-top: 15px; margin-bottom: 8px; }
         .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .photo-slot { width: 100%; height: 95px; border: 2px dashed #ff416c; border-radius: 10px; background: #fff5f6; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #ff416c; cursor: pointer; position: relative; background-size: cover; background-position: center; overflow: hidden; }
+        .photo-slot { width: 100%; height: 95px; border: 2px dashed #ff2d55; border-radius: 10px; background: #fff5f6; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #ff2d55; cursor: pointer; position: relative; background-size: cover; background-position: center; overflow: hidden; }
         .photo-slot input[type="file"] { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2; }
-        .submit-btn { width: 100%; background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .submit-btn { width: 100%; background: linear-gradient(to right, #ff3b30, #ff2d55); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-        /* Card Swipe Screen */
-        #discovery-screen { align-items: center; justify-content: space-between; padding: 15px; }
+        /* SCREEN 2: Discovery Swipe Setup */
+        #discovery-screen { align-items: center; justify-content: space-between; padding: 15px; background: #f7f9fc; }
         .card-container { width: 100%; max-width: 360px; flex: 1; display: flex; align-items: center; justify-content: center; margin: 10px 0; }
         .tinder-card { background: white; width: 100%; height: 380px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; }
         .card-img { width: 100%; flex: 1; background-size: cover; background-position: center; position: relative; }
@@ -44,42 +61,56 @@
         .card-bio { font-size: 13px; color: #777; margin-top: 5px; }
         .swipe-actions { display: flex; justify-content: space-around; width: 100%; max-width: 360px; margin-bottom: 10px; }
 
-        /* Match Dialog Alert Box */
-        #match-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
-        #match-popup h2 { font-size: 36px; color: #ff416c; margin-bottom: 15px; }
-        .match-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; margin: 15px; background-size: cover; background-position: center; display: inline-block; }
-        .match-btn { background: linear-gradient(135deg, #ff4b2b, #ff416c); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; }
+        /* SCREEN 3: Full-Screen Match Popup */
+        #match-popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 10000; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
+        #match-popup h2 { font-size: 36px; color: #ff2d55; margin-bottom: 15px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .match-avatar-box { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .match-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; background-size: cover; background-position: center; box-shadow: 0 0 15px rgba(255,45,85,0.6); }
+        .match-btn { background: linear-gradient(to right, #ff3b30, #ff2d55); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 18px; font-weight: bold; margin-top: 25px; cursor: pointer; box-shadow: 0 4px 15px rgba(255,45,85,0.4); }
 
-        /* 🟢 REAL-TIME WORKING CHAT VIEW CONTAINER */
-        #chat-screen { background: #e5ddd5; display: none; flex-direction: column; justify-content: space-between; }
-        #chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 8px; min-height: 50px; }
-        .msg-bubble { max-width: 75%; padding: 10px 14px; border-radius: 12px; font-size: 15px; line-height: 1.4; word-wrap: break-word; }
-        .msg-bubble.received { background-color: white; align-self: flex-start; color: #000; border-top-left-radius: 0px; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
-        .msg-bubble.sent { background-color: #d9fdd3; color: #000; align-self: flex-end; border-top-right-radius: 0px; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+        /* SCREEN 4: Match Chat Flow Screen */
+        #chat-screen { background-color: #efeae2; }
+        #chat-messages { flex: 1; overflow-y: auto; padding: 20px 15px; display: flex; flex-direction: column; gap: 12px; }
         
-        /* Rigid Visible Native Input Structure */
-        .chat-input-container { background: #f0f0f0; padding: 10px; display: flex; gap: 10px; align-items: center; border-top: 1px solid #ddd; width: 100%; flex-shrink: 0; box-shadow: 0 -2px 5px rgba(0,0,0,0.05); }
-        #msg-input-field { flex: 1; padding: 12px 15px; border: 1px solid #fff; border-radius: 25px; outline: none; font-size: 15px; background: white; }
-        #msg-send-btn { background-color: #00a884; color: white; border: none; padding: 0 20px; border-radius: 25px; font-size: 15px; font-weight: bold; cursor: pointer; height: 42px; }
+        /* Message Bubbles Exact Design styling */
+        .msg-bubble { max-width: 75%; padding: 12px 16px; font-size: 16px; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+        .msg-bubble.received { background-color: #ffffff; color: #000000; align-self: flex-start; border-radius: 0px 15px 15px 15px; }
+        .msg-bubble.sent { background-color: #d9fdd3; color: #000000; align-self: flex-end; border-radius: 15px 0px 15px 15px; }
 
-        /* Dynamic Safety Container for Standard Adsterra Banner (Isolated) */
-        .global-ad-slot { width: 100%; background: #ffffff; border-top: 1px solid #e0e0e0; padding: 5px 0; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0; min-height: 60px; z-index: 5; }
+        /* Input Block Footer Layout */
+        .chat-input-container { background: #f0f0f0; padding: 10px; display: flex; gap: 10px; align-items: center; border-top: 1px solid #e0e0e0; flex-shrink: 0; }
+        #msg-input-field { flex: 1; padding: 12px 18px; border: 1px solid #ffffff; border-radius: 25px; outline: none; font-size: 16px; background: white; }
+        #msg-send-btn { background-color: #00a884; color: white; border: none; padding: 0 22px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; height: 45px; }
+
+        /* Bottom Fixed Banner Wrapper */
+        .global-ad-slot { 
+            width: 100%; 
+            background: #ffffff; 
+            border-top: 1px solid #d0d0d0; 
+            padding: 8px 0; 
+            text-align: center; 
+            min-height: 66px; 
+            flex-shrink: 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 
-    <header id="app-main-header">🦅 Eagle Dating</header>
+    <header id="main-app-header">🦅 <span>Eagle Dating</span></header>
 
     <div id="login-screen" class="app-screen active-screen">
         <div class="form-box">
-            <h3>Create Your Profile</h3>
+            <h3>Create Profile</h3>
             <div class="input-group">
                 <label>Your Name</label>
-                <input type="text" id="user-name-input" placeholder="Enter your full name" value="Ekant">
+                <input type="text" id="user-name-input" placeholder="Enter name">
             </div>
             <div class="input-group">
                 <label>Age</label>
-                <input type="number" id="user-age-input" placeholder="Minimum 18" value="30">
+                <input type="number" id="user-age-input" placeholder="Min 18">
             </div>
             <div class="input-group">
                 <label>Gender</label>
@@ -91,136 +122,121 @@
 
             <div class="photo-section-title">Upload Profile Photos (3 Required)</div>
             <div class="photo-grid">
-                <div class="photo-slot" id="slot-1">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-1', 0)"></div>
-                <div class="photo-slot" id="slot-2">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-2', 1)"></div>
-                <div class="photo-slot" id="slot-3">➕<input type="file" accept="image/*" onchange="previewImage(this, 'slot-3', 2)"></div>
+                <div class="photo-slot" id="slot-1">➕<input type="file" accept="image/*" onchange="previewSlotImage(this, 'slot-1', 0)"></div>
+                <div class="photo-slot" id="slot-2">➕<input type="file" accept="image/*" onchange="previewSlotImage(this, 'slot-2', 1)"></div>
+                <div class="photo-slot" id="slot-3">➕<input type="file" accept="image/*" onchange="previewSlotImage(this, 'slot-3', 2)"></div>
             </div>
 
-            <button class="submit-btn" onclick="saveUserProfile()">Find Matches</button>
+            <button class="submit-btn" onclick="processProfileValidation()">Find Matches</button>
         </div>
     </div>
 
     <div id="discovery-screen" class="app-screen">
         <div class="card-container">
             <div class="tinder-card">
-                <div class="card-img" id="display-photo" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500');">
+                <div class="card-img" id="display-photo" style="background-image: url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500');">
                     <div class="card-badge">🟢 Online</div>
                 </div>
                 <div class="card-details">
-                    <div class="card-name" id="display-name">Priya, 23</div>
-                    <div class="card-bio" id="display-bio">Looking for someone genuine. Let's explore Nagpur together! 💕</div>
+                    <div class="card-name" id="display-name">Sara, 21</div>
+                    <div class="card-bio" id="display-bio">College student, love movies and deep conversations. Let's talk!</div>
                 </div>
             </div>
         </div>
         <div class="swipe-actions">
-            <button style="border:1px solid #ffe6e6; width:55px; height:55px; border-radius:50%; background:white; color:#ff4b2b; font-size:22px; cursor:pointer;" onclick="showNextProfile()">✖</button>
-            <button style="background: linear-gradient(135deg, #00cb51, #00a643); border:none; width:55px; height:55px; border-radius:50%; color:white; font-size:22px; cursor:pointer;" onclick="triggerMatchEvent()">❤</button>
+            <button style="border:1px solid #ffe6e6; width:55px; height:55px; border-radius:50%; background:white; color:#ff4b2b; font-size:22px; cursor:pointer; outline:none;" onclick="showNextProfile()">✖</button>
+            <button style="background: linear-gradient(135deg, #00cb51, #00a643); border:none; width:55px; height:55px; border-radius:50%; color:white; font-size:22px; cursor:pointer; outline:none;" onclick="triggerMatchEvent()">❤</button>
         </div>
     </div>
 
     <div id="match-popup">
         <h2>It's a Match! 😍</h2>
         <p id="match-announcement">You and Sara liked each other.</p>
-        <div>
-            <div class="match-avatar" id="match-user-avatar"></div>
+        <div class="match-avatar-box">
+            <div class="match-avatar" id="match-user-avatar" style="background-image: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150');"></div>
             <div class="match-avatar" id="match-partner-avatar"></div>
         </div>
         <button class="match-btn" onclick="launchChatRoom()">Start Live Chat 💬</button>
     </div>
 
     <div id="chat-screen" class="app-screen">
-        <div id="chat-messages"></div>
+        <div id="chat-messages">
+            <div class="msg-bubble sent">You: Hi</div>
+            <div class="msg-bubble received">Sara: Hey! Thanks for the beautiful match 😊 kahan se ho aap?</div>
+            <div class="msg-bubble sent">You: Nagpur aur aap</div>
+            <div class="msg-bubble received">Sara: Hi sweetie! Sacch btao, Nagpur ghumne chaloge mere sath?</div>
+            <div class="msg-bubble sent">You: Kab</div>
+            <div class="msg-bubble received">Sara: Aapka profile kafi interesting laga mujhe 💕 Waise kya karte ho?</div>
+            <div class="msg-bubble sent">You: Mai job aur aap</div>
+        </div>
+
         <div class="chat-input-container">
             <input type="text" id="msg-input-field" placeholder="Type a message..." autocomplete="off">
             <button id="msg-send-btn" onclick="executeSendMessage()">Send</button>
         </div>
-    </div>
 
-    <div class="global-ad-slot" id="app-ad-holder">
-        <small style="color:#aaa; font-size:10px; display:block; margin-bottom:2px;">Sponsor Advertisement</small>
-        <div id="adsterra-banner-placement"></div>
+        <div class="global-ad-slot" id="banner-ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : '9ea0ea1d4a0a4cdd88d74bf080447040', // Verified Banner Key Placement
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/9ea0ea1d4a0a4cdd88d74bf080447040/invoke.js"></script>
+        </div>
     </div>
 
     <script>
-        // Verified Firebase Cloud Nodes Configurations Hub
+        // Exact Firebase Database Engine Setup
         const firebaseConfig = {
             apiKey: "AIzaSyAhY5TEz712ntfKgWXiiq3jYjT9Gwz9ZDc",
             authDomain: "eagledating.firebaseapp.com",
             databaseURL: "https://eagledating-default-rtdb.firebaseio.com",
             projectId: "eagledating",
-            storageBucket: "easledating.firebasestorage.app",
+            storageBucket: "eagledating.firebasestorage.app",
             messagingSenderId: "827853791832",
             appId: "1:827853791832:web:188b9d03fbc7a7480f202d"
         };
 
         firebase.initializeApp(firebaseConfig);
         const databaseEngine = firebase.database();
-
-        // Shuffled Dummy Profiles Cache List 
+        
         const premiumProfiles = [
-            { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together! 💕", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" },
-            { name: "Neha, 22", bio: "Software developer by day, foodie by night. Match to chat right away!", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500" },
-            { name: "Riya, 25", bio: "Music lover, guitarist, and looking for a long-term genuine bond. 🎵", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500" },
-            { name: "Anjali, 24", bio: "Blogger & traveler. Swipe right if you are ready for adventure!", photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500" },
-            { name: "Sara, 21", bio: "College student, love movies and deep midnight conversations. Let's talk!", photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500" }
+            { name: "Sara, 21", bio: "College student, love movies and deep conversations. Let's talk!", photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500" },
+            { name: "Priya, 23", bio: "Looking for someone genuine. Let's explore Nagpur together! 💕", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" }
         ];
 
-        const girlReplies = [
-            "Hey! Thanks for the beautiful match 😊 kahan se ho aap?",
-            "Hi sweetie! Sacch btao, Nagpur ghumne chaloge mere sath?",
-            "Aapka profile kafi interesting laga mujhe 💕 Waise kya karte ho?",
-            "Main toh thoda busy thi dear. WhatsApp par chat karein?"
-        ];
-
-        let loadedPhotos = { 0: null, 1: null, 2: null }; 
+        let loadedPhotos = { 0: null, 1: null, 2: null };
         let indexPointer = 0;
         let activePartnerName = "Sara";
-        let clientSessionName = "Ekant";
-        let autoReplyStage = 0;
-        let uniqueDeviceToken = 'UserSession_' + Math.floor(Math.random() * 99999);
+        let currentClientName = "You";
 
-        // Async Non-Blocking Multi-Ad Execution Loop
-        function initAdsterraMonetization() {
-            // 1. Popunder Async Injector Script
-            let popScript = document.createElement('script');
-            popScript.src = "https://pl29751221.effectivecpmnetwork.com/0d/c2/44/0dc244659d309013c4152eab11e49ba7.js";
-            popScript.async = true;
-            document.head.appendChild(popScript);
-
-            // 2. Banner Standard Placeholder Injection
-            document.getElementById('adsterra-banner-placement').innerHTML = `
-                <div style="width:320px; height:50px; background:#e1e1e1; display:flex; align-items:center; justify-content:center; font-size:12px; color:#666; font-weight:bold;">
-                    Adsterra Banner Active 🟢
-                </div>
-            `;
-        }
-
-        window.addEventListener('DOMContentLoaded', initAdsterraMonetization);
-
-        function previewImage(input, slotId, idx) {
+        // Photo slot upload handlers
+        function previewSlotImage(input, slotId, idx) {
             const file = input.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById(slotId).style.backgroundImage = `url('${e.target.result}')`;
-                    loadedPhotos[idx] = e.target.result; 
+                    document.getElementById(slotId).innerText = ""; 
+                    loadedPhotos[idx] = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         }
 
+        // Section View Router Logic
         function switchViewTo(targetId) {
             document.querySelectorAll('.app-screen').forEach(scr => scr.style.display = 'none');
             document.getElementById(targetId).style.display = 'flex';
         }
 
-        function saveUserProfile() {
+        function processProfileValidation() {
             const enteredName = document.getElementById('user-name-input').value.trim();
-            if (enteredName.toLowerCase() === 'admin_test') {
-                switchViewTo('discovery-screen');
-                return;
-            }
-            if(enteredName !== "") { clientSessionName = enteredName; }
+            if(enteredName !== "") { currentClientName = enteredName; }
             switchViewTo('discovery-screen');
         }
 
@@ -235,17 +251,23 @@
             activePartnerName = premiumProfiles[indexPointer].name.split(',')[0];
             document.getElementById('match-announcement').innerText = `You and ${activePartnerName} liked each other!`;
             document.getElementById('match-partner-avatar').style.backgroundImage = `url('${premiumProfiles[indexPointer].photo}')`;
-            document.getElementById('match-user-avatar').style.backgroundImage = `url('${loadedPhotos[0] || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150"}')`; 
+            
+            if (loadedPhotos[0]) {
+                document.getElementById('match-user-avatar').style.backgroundImage = `url('${loadedPhotos[0]}')`;
+            }
             document.getElementById('match-popup').style.display = 'flex';
         }
 
         function launchChatRoom() {
             document.getElementById('match-popup').style.display = 'none';
             switchViewTo('chat-screen');
-            document.getElementById('app-main-header').innerText = `💬 Chat with ${activePartnerName}`;
-            document.getElementById('chat-messages').innerHTML = ""; 
-            autoReplyStage = 0; 
-            initializeFirebaseStream();
+            
+            document.getElementById('main-app-header').innerHTML = `💬 <span>Chat with ${activePartnerName}</span>`;
+            
+            const feedArea = document.getElementById('chat-messages');
+            setTimeout(() => { feedArea.scrollTop = feedArea.scrollHeight; }, 300);
+            
+            initializeFirebaseChatStream();
         }
 
         function executeSendMessage() {
@@ -254,39 +276,27 @@
             if (pureText === '') return;
 
             databaseEngine.ref('live_chats').push({
-                senderToken: uniqueDeviceToken,
-                senderLabel: clientSessionName,
+                senderLabel: currentClientName,
                 messageText: pureText,
                 timeLabel: Date.now()
             });
             inputElement.value = '';
-
-            setTimeout(() => {
-                if (autoReplyStage < girlReplies.length) {
-                    databaseEngine.ref('live_chats').push({
-                        senderToken: "BOT_NODE_SYSTEM",
-                        senderLabel: activePartnerName,
-                        messageText: girlReplies[autoReplyStage],
-                        timeLabel: Date.now()
-                    });
-                    autoReplyStage++;
-                }
-            }, 1500); 
         }
 
-        function initializeFirebaseStream() {
+        function initializeFirebaseChatStream() {
+            const feedArea = document.getElementById('chat-messages');
             databaseEngine.ref('live_chats').off();
+            
             databaseEngine.ref('live_chats').on('child_added', (nodeSnapshot) => {
                 const record = nodeSnapshot.val();
-                const feedArea = document.getElementById('chat-messages');
                 const bubbleElement = document.createElement('div');
                 
-                if (record.senderToken === uniqueDeviceToken) {
+                if (record.senderLabel === currentClientName) {
                     bubbleElement.className = 'msg-bubble sent';
-                    bubbleElement.innerHTML = `<strong>You:</strong> ${record.messageText}`;
+                    bubbleElement.innerText = `You: ${record.messageText}`;
                 } else {
                     bubbleElement.className = 'msg-bubble received';
-                    bubbleElement.innerHTML = `<strong>${activePartnerName}:</strong> ${record.messageText}`;
+                    bubbleElement.innerText = `${record.senderLabel}: ${record.messageText}`;
                 }
                 
                 feedArea.appendChild(bubbleElement);
